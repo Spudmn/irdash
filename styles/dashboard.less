@@ -1,0 +1,276 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css');
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700');
+@import 'solarized.less';
+
+* {
+    font-family: 'Roboto', sans-serif;
+    overflow: none;
+    /* transition: width 16ms; = 60fps */
+    transition-duration: 64ms;
+}
+.blink {
+    animation: blink-animation 1s steps(5, start) infinite;
+    -webkit-animation: blink-animation 1s steps(5, start) infinite;
+}
+@keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+@-webkit-keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+html, body {
+    height: 100%;
+}
+body {
+    background-color: @base3;
+    position: relative;
+    width: 100%;
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+}
+#wrapper {
+    background-color: @base03;
+    width: 800px;
+    height: 480px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -240px 0 0 -400px;
+}
+#flag {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 800px;
+    height: 480px;
+    z-index: 0;
+}
+#flag[color="green"] {
+    background-color: @green;
+}
+#flag[color="yellow"] {
+    background-color: @yellow;
+}
+#flag[color="white"] {
+    background-color: @white;
+}
+#flag[color="black"] {
+    background-color: @black;
+}
+#inner {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 790px;
+    height: 470px;
+    background-color: @base03;
+}
+#sli {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 780px;
+    height: 60px;
+}
+.markers {
+    width: 780px;
+    height: 60px;
+    display: table;
+    table-layout: fixed;
+}
+.marker {
+    border-right: 2px solid @base2;
+    color: @base3;
+    display: table-cell;
+    position: relative;
+    height: 60px;
+    z-index: 3;
+}
+.markers .marker:first-child {
+    border-left: 1px solid @base2;
+    /* width: 127px;*/
+}
+.markers .marker:last-child {
+    border-right: 1px solid @base2;
+    /* width: 129px;*/
+}
+.marker .rpm {
+    padding: 0 15px;
+    line-height: 200%;
+    font-weight: bold;
+    font-size: 16px;
+}
+.marker .m25, .marker .m50, .marker .m75 {
+    width: 1px;
+    background-color: @base2;
+    display: block;
+    position: absolute;
+    bottom: 0;
+}
+.marker .m25, .marker .m75 {
+    height: 10px;
+}
+.marker .m25 {
+    left: 25%;
+}
+.marker .m50 {
+    height: 15px;
+    left: 50%;
+}
+.marker .m75 {
+    left: 75%;
+}
+#sli .pit {
+    width: 800px;
+    height: 70px;
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    z-index: 5;
+    background-color: @blue;
+    display: none;
+}
+#sli .shift {
+    width: 800px;
+    height: 80px;
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    z-index: 2;
+    background-color: @red;
+    display: none;
+}
+#gear.shift {
+    background-color: @red;
+}
+/*
+#sli .rev-green, #sli .rev-yellow, #sli .rev-red {
+    height: 60px;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+#sli .rev-green {
+    background-color: @green;
+}
+#sli .rev-yellow {
+    background-color: @yellow;
+}
+#sli .rev-red {
+    background-color: @red;
+}
+*/
+
+#sli .revbar {
+    background-color: @blue;
+    position: absolute;
+    height: 25px;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    width: 0%;
+}
+#col1, #col2, #col3, #col4, #col5 {
+    position: absolute;
+    top: 80px;
+}
+#col1 {
+    left: 0;
+    width: 125px;
+}
+#col2 {
+    left: 125px;
+    width: 125px;
+}
+#col3 {
+    left: 250px;
+    width: 200px;
+}
+#col4 {
+    left: 450px;
+    width: 150px;
+}
+#col5 {
+    left: 600px;
+    width: 200px;
+}
+#row {
+    position: relative;
+}
+#col6, #col7 {
+    position: absolute;
+    top: 0;
+}
+#col6 {
+    width: 100px;
+    left: 0;
+}
+#col7 {
+    width: 100px;
+    left: 100px;
+}
+sub {
+    font-weight: normal;
+    font-size: 12px;
+    bottom: 0;
+    left: 0;
+}
+sup {
+    font-weight: normal;
+    font-size: 16px;
+    top: -.75rem;
+    left: -.25rem;
+}
+fieldset {
+    border: 2px solid @base01;
+    margin: 0 10px 10px 10px;
+}
+#col1 fieldset, #col2 fieldset, #col4 fieldset, #col5 fieldset {
+    padding: 14px 0;
+}
+#col3 fieldset {
+    padding: 7px 0;
+}
+legend {
+    color: @base1;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 0 10px;
+    text-align: center;
+    text-transform: lowercase;
+    line-height: 125%;
+}
+legend small {
+    margin-left: 10px;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 125%;
+}
+fieldset div {
+    color: @base3;
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 125%;
+}
+#gear div {
+    font-size: 144px;
+}
+
+fieldset {
+    &.warning {
+        border-color: @red;
+    }
+
+    &.faster div {
+        color: @green;
+    }
+
+    &.slower div {
+        color: @red;
+    }
+}
