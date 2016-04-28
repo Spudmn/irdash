@@ -1,4 +1,4 @@
-(function(angular, undefined) {
+(function(angular) {
     'use strict'
 
     const app = angular.module('irdApp', [

@@ -28,6 +28,8 @@ body {
     font-family: 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
     background-color: @base3;
     position: relative;
+    margin: 0;
+    padding: 0;
     width: 100%;
     -webkit-user-select: none;
     -webkit-app-region: drag;
@@ -65,7 +67,7 @@ fieldset {
         color: @base1;
         font-size: 1.25rem;
         font-weight: 500;
-        padding: 0 1.5rem;
+        padding: 0 1rem;
         text-align: center;
         text-transform: lowercase;
         line-height: 1.25;
@@ -95,6 +97,9 @@ fieldset {
     }
     &.warning {
         border-color: @red;
+        legend {
+            color: @red;
+        }
     }
     &#delta {
         &.faster div {

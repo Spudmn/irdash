@@ -1,17 +1,16 @@
-(function(angular, lodash, IRacing, undefined) {
+(function(window, angular, lodash) {
     'use strict'
 
     const app = angular.module('irdServices', [])
 
     app.service('iRacing', ['$rootScope', 'Dashboard', function($rootScope, Dashboard) {
-        const ir = new IRacing(['DriverInfo', 'SessionInfo', 'WeekendInfo', '__all_telemetry__'], [], 60)
+        const ir = new window.IRacing(['DriverInfo', 'SessionInfo', 'WeekendInfo', '__all_telemetry__'], [], 60)
 
         ir.onWSConnect = function() {
             $rootScope.wsConnected = true
 
             return $rootScope.$apply()
         }
-
         ir.onWSDisconnect = function() {
             $rootScope.wsConnected = false
 
@@ -89,4 +88,4 @@
             }
         }
     }])
-})(angular, _, window.IRacing)
+})(window, angular, _)

@@ -39,12 +39,12 @@
                     <div class="column column-15">
                         <fieldset id="water-temp" ird-water-temp-warn>
                             <legend>wat<small>&deg;C</small></legend>
-                            <div>{{ ir.WaterTemp | fixed }}</div>
+                            <div ird-water-temp></div>
                         </fieldset>
 
                         <fieldset id="oil-temp">
                             <legend>oil<small>&deg;C</small></legend>
-                            <div>{{ ir.OilTemp | fixed }}</div>
+                            <div ird-oil-temp></div>
                         </fieldset>
 
                         <fieldset id="oil-psi" ird-oil-press-warn>
@@ -80,7 +80,7 @@
                         </fieldset>
                     </div>
 
-                    <div class="column column-30">
+                    <div class="column column-25">
                         <fieldset id="rpm">
                             <legend>rpm</legend>
                             <div>{{ ir.RPM | fixed }}</div>
@@ -92,7 +92,7 @@
                         </fieldset>
 
                         <fieldset id="speed">
-                            <legend>speed<small>km/h</small></legend>
+                            <legend>speed</legend>
                             <div>{{ ir.Speed | speed }}</div>
                         </fieldset>
                     </div>
@@ -113,13 +113,13 @@
                             <div ird-tank></div>
                         </fieldset>
 
-                        <fieldset id="fuel" class="ng-hide">
+                        <fieldset id="fuel">
                             <legend>fuel<small>5L</small></legend>
                             <div ird-fuel></div>
                         </fieldset>
                     </div>
 
-                    <div class="column column-25">
+                    <div class="column column-30">
                         <fieldset id="best">
                             <legend>best</legend>
                             <div>{{ ir.LapBestLapTime | lapTime }}</div>
@@ -135,7 +135,7 @@
                             <div ird-delta></div>
                         </fieldset>
 
-                        <div class="row ng-hide">
+                        <div class="row">
                             <div class="column column-50">
                                 <fieldset id="pit">
                                     <legend>pit</legend>

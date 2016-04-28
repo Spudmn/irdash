@@ -1,4 +1,4 @@
-(function(angular, undefined) {
+(function(angular) {
     'use strict'
 
     const app = angular.module('irdDirectives', [])
@@ -31,6 +31,23 @@
         }
     })
 
+    app.directive('irdWaterTemp', function() {
+        return {
+            link: function(scope, element, attrs) {
+                scope.$watch('ir.WaterTemp', function(n, o) {
+                    if (!n || n == null) {
+                        element.text('-')
+                        return
+                    }
+
+                    let temp = _.split(n.toFixed(1), '.')
+
+                    element.html(temp[0] + '<sub>.</sub><sup>' + temp[1] + '</sup>')
+                })
+            }
+        }
+    })
+
     app.directive('irdOilPressWarn', function() {
         return {
             link: function(scope, element, attrs) {
@@ -40,6 +57,23 @@
                     } else {
                         element.removeClass('warning')
                     }
+                })
+            }
+        }
+    })
+
+    app.directive('irdOilTemp', function() {
+        return {
+            link: function(scope, element, attrs) {
+                scope.$watch('ir.OilTemp', function(n, o) {
+                    if (!n || n == null) {
+                        element.text('-')
+                        return
+                    }
+
+                    let temp = _.split(n.toFixed(1), '.')
+
+                    element.html(temp[0] + '<sub>.</sub><sup>' + temp[1] + '</sup>')
                 })
             }
         }
@@ -56,7 +90,7 @@
 
                     let bias = _.split(n.toFixed(1), '.')
 
-                    element.html(bias[0] + '<sup>.' + bias[1] + '</sup>')
+                    element.html(bias[0] + '<sub>.</sub><sup>' + bias[1] + '</sup>')
                 })
             }
         }
@@ -73,7 +107,7 @@
 
                     let voltage = _.split(n.toFixed(1), '.')
 
-                    element.html(voltage[0] + '<sup>.' + voltage[1] + '</sup>')
+                    element.html(voltage[0] + '<sub>.</sub><sup>' + voltage[1] + '</sup>')
                 })
             }
         }
@@ -90,7 +124,7 @@
 
                     let tank = _.split(n.toFixed(1), '.')
 
-                    element.html(tank[0] + '<sup>.' + tank[1] + '</sup>')
+                    element.html(tank[0] + '<sub>.</sub><sup>' + tank[1] + '</sup>')
                 })
             }
         }
@@ -175,7 +209,7 @@
                     // @todo (estimated) lap calculator
                     // use &asymp; almost equal symbol
 
-                    element.html(lap + '<sup>' + sym + laps + '</sup>')
+                    element.html(lap + '<sub>' + sym + '</sub><sup>' + laps + '</sup>')
                 })
             }
         }
@@ -190,7 +224,7 @@
                         return
                     }
 
-                    element.html(n + '<sup>/' + scope.drivers + '</sup>')
+                    element.html(n + '<sub>/</sub><sup>' + scope.drivers + '</sup>')
                 })
             }
         }
