@@ -56,7 +56,7 @@
 
                     let bias = _.split(n.toFixed(1), '.')
 
-                    element.html(bias[0] + '<sub>.</sub><sup>' + bias[1] + '</sup>')
+                    element.html(bias[0] + '<sup>.' + bias[1] + '</sup>')
                 })
             }
         }
@@ -73,7 +73,7 @@
 
                     let voltage = _.split(n.toFixed(1), '.')
 
-                    element.html(voltage[0] + '<sub>.</sub><sup>' + voltage[1] + '</sup>')
+                    element.html(voltage[0] + '<sup>.' + voltage[1] + '</sup>')
                 })
             }
         }
@@ -90,7 +90,7 @@
 
                     let tank = _.split(n.toFixed(1), '.')
 
-                    element.html(tank[0] + '<sub>.</sub><sup>' + tank[1] + '</sup>')
+                    element.html(tank[0] + '<sup>.' + tank[1] + '</sup>')
                 })
             }
         }
@@ -107,6 +107,8 @@
 
                     // @todo fuel calculator
                     // element.text(n.toFixed(0))
+
+                    element.text('-')
                 })
             }
         }
@@ -123,6 +125,8 @@
 
                     // @todo fuel calculator
                     // element.text(n.toFixed(0))
+
+                    element.text('-')
                 })
             }
         }
@@ -139,6 +143,8 @@
 
                     // @todo fuel calculator
                     // element.text(n.toFixed(0))
+
+                    element.text('-')
                 })
             }
         }
@@ -169,7 +175,7 @@
                     // @todo (estimated) lap calculator
                     // use &asymp; almost equal symbol
 
-                    element.html(lap + '<sub>' + sym + '</sub><sup>' + laps + '</sup>')
+                    element.html(lap + '<sup>' + sym + laps + '</sup>')
                 })
             }
         }
@@ -184,7 +190,7 @@
                         return
                     }
 
-                    element.html(n + '<sub>/</sub><sup>' + scope.drivers + '</sup>')
+                    element.html(n + '<sup>/' + scope.drivers + '</sup>')
                 })
             }
         }
