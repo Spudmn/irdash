@@ -34,12 +34,12 @@ body {
 #dashboard {
     overflow: hidden;
     background-color: @base03;
-    width: 800px;
-    height: 480px;
+    width: 80rem;
+    height: 48rem;
     position: absolute;
     top: 50%;
     left: 50%;
-    margin: -240px 0 0 -400px;
+    margin: -24rem 0 0 -40rem;
 }
 .container {
     padding: 0 1rem;
@@ -58,7 +58,7 @@ body {
 }
 
 fieldset {
-    border: 2px solid @base01;
+    border: .2rem solid @base01;
     margin: 0 0 2rem 0;
     padding: 0;
     legend {
@@ -120,17 +120,17 @@ fieldset {
         display: table;
         table-layout: fixed;
         .marker {
-            border-right: 2px solid @base2;
+            border-right: .2rem solid @base2;
             color: @base3;
             display: table-cell;
             position: relative;
             height: 6rem;
             z-index: 3;
             &:first-child {
-                border-left: 1px solid @base2;
+                border-left: .1rem solid @base2;
             }
             &:last-child {
-                border-right: 1px solid @base2;
+                border-right: .1rem solid @base2;
             }
             .rpm {
                 padding: 0 1.5rem;
@@ -141,7 +141,7 @@ fieldset {
             .m25,
             .m50,
             .m75 {
-                width: 1px;
+                width: .1rem;
                 background-color: @base2;
                 display: block;
                 position: absolute;
@@ -164,21 +164,22 @@ fieldset {
         }
     }
     .pit {
-        width: 800px;
-        height: 70px;
+        width: 80rem;
+        height: 8rem;
         position: absolute;
-        top: -10px;
-        left: -10px;
+        top: -1rem;
+        left: -1rem;
         z-index: 5;
         background-color: @blue;
         display: none;
     }
     .shift {
-        width: 800px;
-        height: 80px;
+        width: 80rem;
+        height: 8rem;
         position: absolute;
-        top: -10px;
-        left: -10px;
+        top: -1rem;
+        left: -1rem;
+        right: 0;
         z-index: 2;
         background-color: @red;
         display: none;
@@ -186,7 +187,7 @@ fieldset {
     .revbar {
         background-color: @blue;
         position: absolute;
-        height: 25px;
+        height: 2.5rem;
         bottom: 0;
         left: 0;
         z-index: 1;
@@ -224,14 +225,14 @@ fieldset {
     }
 
     nav {
-        border-right: 2px solid @base03;
+        border-right: .2rem solid @base03;
 
         ul {
             margin: 0;
             padding: 0;
 
             li {
-                border-bottom: 1px solid @base03;
+                border-bottom: .1rem solid @base03;
                 list-style-type: none;
                 margin: 0;
                 padding: 0;

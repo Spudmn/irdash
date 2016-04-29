@@ -70,25 +70,11 @@
             },
 
             numRevs: function(redLine) {
-                let maxRev = this.parseThousands(redLine),
-                    tryExact = parseInt(maxRev + '000')
-
-                if (tryExact != redLine) {
-                    let tryNext = tryExact + 1000
-                    if (tryNext > redLine) {
-                        maxRev = this.parseThousands(tryNext)
-                    }
-                }
-
-                return lodash.range(0, maxRev)
+                return lodash.range(0, this.highestRev(redLine))
             },
 
-            parseThousands: function(rev) {
-                rev = rev.toString()
-
-                return rev.length == 5
-                    ? parseInt(rev[0] + rev[1])
-                    : parseInt(rev[0])
+            highestRev: function(rev) {
+                return Math.ceil(rev / 1000).toFixed(0)
             }
         }
     }])

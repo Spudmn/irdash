@@ -53,7 +53,7 @@
                 FUEL_PRESSURE_WARNING |
                 OIL_PRESSURE_WARNING
 
-            $scope.ir.RPM = 8900
+            $scope.ir.RPM = 7299
             $scope.ir.LapDeltaToBestLap = -2.399
             $scope.ir.DriverInfo = {
                 DriverCarRedLine: 9000,

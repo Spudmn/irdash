@@ -58,7 +58,7 @@ gulp.task('scripts', function() {
         .pipe(babel({
             presets: ['es2015', 'angular']
         }))
-        //.pipe(uglify())
+        .pipe(uglify())
         .pipe(concat('dashboard.js'))
         .pipe(gulp.dest(dests.scripts))
 })
