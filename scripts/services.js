@@ -3,6 +3,10 @@
 
     const app = angular.module('irdServices', [])
 
+    app.service('Config', [function() {
+        return new window.Config()
+    }])
+
     app.service('iRacing', ['$rootScope', 'Dashboard', function($rootScope, Dashboard) {
         const ir = new window.IRacing(['DriverInfo', 'SessionInfo', 'WeekendInfo', '__all_telemetry__'], [], 60)
 
@@ -76,7 +80,7 @@
                     }
                 }
 
-                return lodash.range(maxRev - 5, maxRev)
+                return lodash.range(0, maxRev)
             },
 
             parseThousands: function(rev) {

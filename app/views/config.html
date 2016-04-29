@@ -1,0 +1,59 @@
+<div id="config">
+    <div class="close" ird-back>&times;</div>
+    <div class="row">
+        <div class="column column-25">
+            <div ng-include="'views/navbar.html'"></div>
+        </div>
+        <div class="column column-50">
+            <form>
+                <div class="row">
+                    <div class="column column-25">
+                        <label for="configWindowWidth">Width</label>
+                    </div>
+                    <div class="column column-50">
+                        <input id="configWindowWidth" name="width" type="number" ng-model="config.width">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column column-25">
+                        <label for="configWindowHeight">Height</label>
+                    </div>
+                    <div class="column column-50">
+                        <input id="configWindowHeight" name="height" name="height" type="number" ng-model="config.height">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column column-25">
+                        <label for="configWindowPosX">Pos. X</label>
+                    </div>
+                    <div class="column column-50">
+                        <input id="configWindowPosX" name="posX" type="number" ng-model="config.posX">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column column-25">
+                        <label for="configWindowPosY">Pos. Y</label>
+                    </div>
+                    <div class="column column-50">
+                        <input id="configWindowPosY" name="posY" type="number" ng-model="config.posY">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column column-25">
+                        <label for="configWindowDebug">Debug</label>
+                    </div>
+                    <div class="column column-50">
+                        <input id="configWindowDebug" name="debug" type="checkbox" ng-model="config.debug">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column column-50 column-offset-25">
+                        <button class="button-primary" type="submit" ng-click="save(config)">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

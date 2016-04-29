@@ -3,7 +3,24 @@
 (function (angular) {
     'use strict';
 
-    var app = angular.module('irdApp', ['irdControllers', 'irdDirectives', 'irdServices', 'irdFilters']);
+    var app = angular.module('irdApp', [
+    // angular
+    'ngRoute',
+
+    // irdash
+    'irdControllers', 'irdDirectives', 'irdServices', 'irdFilters']);
+
+    app.config(['$routeProvider', function ($routeProvider) {
+        $routeProvider.when('/config', {
+            templateUrl: 'views/config.html',
+            controller: 'irdConfigCtrl'
+        }).when('/', {
+            templateUrl: 'views/amggt3.html',
+            controller: 'irdAmgGt3Ctrl'
+        }).otherwise({
+            redirectTo: '/'
+        });
+    }]);
 })(angular);
 "use strict";
 
@@ -78,21 +95,30 @@ var SESSION_STATE_COOL_DOWN = 6;
 
     var app = angular.module('irdControllers', []);
 
-    app.controller('irdCtrl', ['$scope', 'iRacing', 'Dashboard', function ($scope, iRacing, Dashboard) {
+    app.controller('irdCtrl', ['$scope', '$location', function ($scope, $location) {
+        $scope.config = function ($event, type) {
+            if ($event.ctrlKey && 'Comma' == $event.code) {
+                $location.path('/config');
+            }
+        };
+    }]);
+
+    app.controller('irdConfigCtrl', ['$scope', 'Config', function ($scope, Config) {
+        $scope.config = Config.get();
+        $scope.save = function (config) {
+            $scope.config = Config.set(config);
+        };
+    }]);
+
+    app.controller('irdAmgGt3Ctrl', ['$scope', 'iRacing', 'Dashboard', function ($scope, iRacing, Dashboard) {
         $scope.ir = iRacing.data;
 
         $scope.revs = [];
         $scope.blink = 0;
-        $scope.base = 0;
         $scope.max = 0;
         $scope.drivers = 0;
 
         setTimeout(function () {
-            $scope.revs = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-            $scope.blink = 8750;
-            $scope.base = 0;
-            $scope.max = 9000;
-            $scope.drivers = 32;
             $scope.ir.PlayerCarPosition = 1;
             $scope.ir.FuelLevel = 57.8;
             $scope.ir.Gear = 4;
@@ -116,8 +142,13 @@ var SESSION_STATE_COOL_DOWN = 6;
             };
             $scope.ir.EngineWarnings = WATER_TEMP_WARNING | FUEL_PRESSURE_WARNING | OIL_PRESSURE_WARNING;
 
-            $scope.ir.RPM = 7450;
+            $scope.ir.RPM = 8900;
             $scope.ir.LapDeltaToBestLap = -2.399;
+            $scope.ir.DriverInfo = {
+                DriverCarRedLine: 9000,
+                DriverCarSLBlinkRPM: 8800,
+                Drivers: []
+            };
         }, 500);
 
         $scope.$watch('ir.DriverInfo', function (n, o) {
@@ -127,7 +158,6 @@ var SESSION_STATE_COOL_DOWN = 6;
 
             $scope.revs = Dashboard.numRevs(n.DriverCarRedLine);
             $scope.blink = n.DriverCarSLBlinkRPM;
-            $scope.base = $scope.revs[0] * 1000;
             $scope.max = n.DriverCarRedLine;
             $scope.drivers = n.Drivers.length;
         });
@@ -139,6 +169,16 @@ var SESSION_STATE_COOL_DOWN = 6;
     'use strict';
 
     var app = angular.module('irdDirectives', []);
+
+    app.directive('irdBack', ['$window', function ($window) {
+        return {
+            link: function link(scope, element, attrs) {
+                element.on('click', function () {
+                    $window.history.back();
+                });
+            }
+        };
+    }]);
 
     app.directive('irdFuelPressWarn', function () {
         return {
@@ -436,7 +476,6 @@ var SESSION_STATE_COOL_DOWN = 6;
                     }
 
                     var revs = scope.revs,
-                        base = scope.base,
                         max = scope.max,
                         rpm = n;
 
@@ -447,8 +486,8 @@ var SESSION_STATE_COOL_DOWN = 6;
                     }
 
                     // in between
-                    if (rpm > base) {
-                        element.css('width', (rpm - base) / (max - base) * 100 + '%');
+                    if (rpm) {
+                        element.css('width', rpm / max * 100 + '%');
                         return;
                     }
 
@@ -581,6 +620,10 @@ var SESSION_STATE_COOL_DOWN = 6;
 
     var app = angular.module('irdServices', []);
 
+    app.service('Config', [function () {
+        return new window.Config();
+    }]);
+
     app.service('iRacing', ['$rootScope', 'Dashboard', function ($rootScope, Dashboard) {
         var ir = new window.IRacing(['DriverInfo', 'SessionInfo', 'WeekendInfo', '__all_telemetry__'], [], 60);
 
@@ -651,7 +694,7 @@ var SESSION_STATE_COOL_DOWN = 6;
                     }
                 }
 
-                return lodash.range(maxRev - 5, maxRev);
+                return lodash.range(0, maxRev);
             },
 
             parseThousands: function parseThousands(rev) {
@@ -662,6 +705,21 @@ var SESSION_STATE_COOL_DOWN = 6;
         };
     }]);
 })(window, angular, _);
+'use strict';
+
+var Config = function Config() {
+    this.ipc = require('electron').ipcRenderer;
+};
+
+Config.prototype.get = function () {
+    return this.ipc.sendSync('getConfig');
+};
+
+Config.prototype.set = function (config) {
+    return this.ipc.sendSync('setConfig', config);
+};
+
+window.Config = Config;
 "use strict";
 
 /* CoffeeScript converted, based on http://ir-apps.kutu.ru/libs/ir.coffee */

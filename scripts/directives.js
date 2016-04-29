@@ -3,6 +3,16 @@
 
     const app = angular.module('irdDirectives', [])
 
+    app.directive('irdBack', ['$window', function($window) {
+        return {
+            link: function(scope, element, attrs) {
+                element.on('click', function() {
+                    $window.history.back()
+                })
+            }
+        }
+    }])
+
     app.directive('irdFuelPressWarn', function() {
         return {
             link: function(scope, element, attrs) {
@@ -298,7 +308,6 @@
 
 
                     let revs = scope.revs,
-                        base = scope.base,
                         max  = scope.max,
                         rpm  = n
 
@@ -309,8 +318,8 @@
                     }
 
                     // in between
-                    if (rpm > base) {
-                        element.css('width', ((rpm - base ) / (max - base ) * 100) + '%')
+                    if (rpm) {
+                        element.css('width', (rpm / max * 100) + '%')
                         return
                     }
 
@@ -368,7 +377,6 @@
                         if (element.css('display') != 'block') {
                             element.css('display', 'block')
                         }
-
                     } else {
                         if (element.css('display') != 'none') {
                             element.css('display', 'none')

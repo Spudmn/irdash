@@ -3,21 +3,30 @@
 
     const app = angular.module('irdControllers', [])
 
-    app.controller('irdCtrl', ['$scope', 'iRacing', 'Dashboard', function ($scope, iRacing, Dashboard) {
+    app.controller('irdCtrl', ['$scope', '$location', function($scope, $location) {
+        $scope.config = function($event, type) {
+            if ($event.ctrlKey && 'Comma' == $event.code) {
+                $location.path('/config')
+            }
+        }
+    }])
+
+    app.controller('irdConfigCtrl', ['$scope', 'Config', function($scope, Config) {
+        $scope.config = Config.get()
+        $scope.save = function(config) {
+            $scope.config = Config.set(config)
+        }
+    }])
+
+    app.controller('irdAmgGt3Ctrl', ['$scope', 'iRacing', 'Dashboard', function ($scope, iRacing, Dashboard) {
         $scope.ir = iRacing.data
 
         $scope.revs    = []
         $scope.blink   = 0
-        $scope.base    = 0
         $scope.max     = 0
         $scope.drivers = 0
 
         setTimeout(function() {
-            $scope.revs = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-            $scope.blink = 8750
-            $scope.base = 0
-            $scope.max  = 9000
-            $scope.drivers = 32
             $scope.ir.PlayerCarPosition = 1
             $scope.ir.FuelLevel = 57.8
             $scope.ir.Gear = 4
@@ -44,8 +53,13 @@
                 FUEL_PRESSURE_WARNING |
                 OIL_PRESSURE_WARNING
 
-            $scope.ir.RPM = 7450
+            $scope.ir.RPM = 8900
             $scope.ir.LapDeltaToBestLap = -2.399
+            $scope.ir.DriverInfo = {
+                DriverCarRedLine: 9000,
+                DriverCarSLBlinkRPM: 8800,
+                Drivers: []
+            }
         }, 500);
 
         $scope.$watch('ir.DriverInfo', function(n, o) {
@@ -55,7 +69,6 @@
 
             $scope.revs    = Dashboard.numRevs(n.DriverCarRedLine)
             $scope.blink   = n.DriverCarSLBlinkRPM
-            $scope.base    = $scope.revs[0] * 1000
             $scope.max     = n.DriverCarRedLine
             $scope.drivers = n.Drivers.length
         })
