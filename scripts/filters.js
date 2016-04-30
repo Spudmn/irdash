@@ -1,4 +1,4 @@
-(function(angular, lodash, undefined) {
+(function(angular, lodash) {
     'use strict'
 
     const app = angular.module('irdFilters', [])

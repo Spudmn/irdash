@@ -1,17 +1,20 @@
-(function(angular, lodash, IRacing, undefined) {
+(function(window, angular, lodash) {
     'use strict'
 
     const app = angular.module('irdServices', [])
 
+    app.service('Config', [function() {
+        return new window.Config()
+    }])
+
     app.service('iRacing', ['$rootScope', 'Dashboard', function($rootScope, Dashboard) {
-        const ir = new IRacing(['DriverInfo', 'SessionInfo', 'WeekendInfo', '__all_telemetry__'], [], 60)
+        const ir = new window.IRacing(['DriverInfo', 'SessionInfo', 'WeekendInfo', '__all_telemetry__'], [], 60)
 
         ir.onWSConnect = function() {
             $rootScope.wsConnected = true
 
             return $rootScope.$apply()
         }
-
         ir.onWSDisconnect = function() {
             $rootScope.wsConnected = false
 
@@ -67,26 +70,12 @@
             },
 
             numRevs: function(redLine) {
-                let maxRev = this.parseThousands(redLine),
-                    tryExact = parseInt(maxRev + '000')
-
-                if (tryExact != redLine) {
-                    let tryNext = tryExact + 1000
-                    if (tryNext > redLine) {
-                        maxRev = this.parseThousands(tryNext)
-                    }
-                }
-
-                return lodash.range(maxRev - 5, maxRev)
+                return lodash.range(0, this.highestRev(redLine))
             },
 
-            parseThousands: function(rev) {
-                rev = rev.toString()
-
-                return rev.length == 5
-                    ? parseInt(rev[0] + rev[1])
-                    : parseInt(rev[0])
+            highestRev: function(rev) {
+                return Math.ceil(rev / 1000).toFixed(0)
             }
         }
     }])
-})(angular, _, window.IRacing)
+})(window, angular, _)

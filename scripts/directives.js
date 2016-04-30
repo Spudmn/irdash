@@ -1,7 +1,17 @@
-(function(angular, undefined) {
+(function(angular) {
     'use strict'
 
     const app = angular.module('irdDirectives', [])
+
+    app.directive('irdBack', ['$window', function($window) {
+        return {
+            link: function(scope, element, attrs) {
+                element.on('click', function() {
+                    $window.history.back()
+                })
+            }
+        }
+    }])
 
     app.directive('irdFuelPressWarn', function() {
         return {
@@ -31,6 +41,23 @@
         }
     })
 
+    app.directive('irdWaterTemp', function() {
+        return {
+            link: function(scope, element, attrs) {
+                scope.$watch('ir.WaterTemp', function(n, o) {
+                    if (!n || n == null) {
+                        element.text('-')
+                        return
+                    }
+
+                    let temp = _.split(n.toFixed(1), '.')
+
+                    element.html(temp[0] + '<sub>.</sub><sup>' + temp[1] + '</sup>')
+                })
+            }
+        }
+    })
+
     app.directive('irdOilPressWarn', function() {
         return {
             link: function(scope, element, attrs) {
@@ -40,6 +67,23 @@
                     } else {
                         element.removeClass('warning')
                     }
+                })
+            }
+        }
+    })
+
+    app.directive('irdOilTemp', function() {
+        return {
+            link: function(scope, element, attrs) {
+                scope.$watch('ir.OilTemp', function(n, o) {
+                    if (!n || n == null) {
+                        element.text('-')
+                        return
+                    }
+
+                    let temp = _.split(n.toFixed(1), '.')
+
+                    element.html(temp[0] + '<sub>.</sub><sup>' + temp[1] + '</sup>')
                 })
             }
         }
@@ -107,6 +151,8 @@
 
                     // @todo fuel calculator
                     // element.text(n.toFixed(0))
+
+                    element.text('-')
                 })
             }
         }
@@ -123,6 +169,8 @@
 
                     // @todo fuel calculator
                     // element.text(n.toFixed(0))
+
+                    element.text('-')
                 })
             }
         }
@@ -139,6 +187,8 @@
 
                     // @todo fuel calculator
                     // element.text(n.toFixed(0))
+
+                    element.text('-')
                 })
             }
         }
@@ -258,7 +308,6 @@
 
 
                     let revs = scope.revs,
-                        base = scope.base,
                         max  = scope.max,
                         rpm  = n
 
@@ -269,8 +318,8 @@
                     }
 
                     // in between
-                    if (rpm > base) {
-                        element.css('width', ((rpm - base ) / (max - base ) * 100) + '%')
+                    if (rpm) {
+                        element.css('width', (rpm / max * 100) + '%')
                         return
                     }
 
@@ -328,7 +377,6 @@
                         if (element.css('display') != 'block') {
                             element.css('display', 'block')
                         }
-
                     } else {
                         if (element.css('display') != 'none') {
                             element.css('display', 'none')
