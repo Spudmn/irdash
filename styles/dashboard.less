@@ -22,6 +22,7 @@
 body,
 html {
     height: 100%;
+    width: 100%;
 }
 body {
     font-family: 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
@@ -29,20 +30,16 @@ body {
     position: relative;
     margin: 0;
     padding: 0;
-    width: 100%;
 }
 #dashboard {
     overflow: hidden;
     background-color: @base03;
-    width: 80rem;
-    height: 48rem;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -24rem 0 0 -40rem;
+    width: 100%;
+    height: 100%;
 }
 .container {
-    padding: 0 1rem;
+    max-width: 100%;
+    padding: 0 2vw;
 }
 .row {
     .column {
@@ -58,40 +55,40 @@ body {
 }
 
 fieldset {
-    border: .2rem solid @base01;
-    margin: 0 0 2rem 0;
+    border: .5vmin solid @base01;
+    margin: 0 0 3vh 0;
     padding: 0;
     legend {
         cursor: default;
         color: @base1;
-        font-size: 1.25rem;
+        font-size: 2.5vh;
         font-weight: 500;
-        padding: 0 1rem;
+        padding: 0 2vw;
         text-align: center;
         text-transform: lowercase;
         line-height: 1.25;
         small {
-            font-size: .75rem;
+            font-size: 1.5vh;
             font-weight: 300;
             line-height: 1.25;
-            margin-left: 1rem;
+            margin-left: 2vw;
         }
     }
     div {
         cursor: default;
         color: @base3;
-        font-size: 3rem;
+        font-size: 6.25vh;
         font-weight: 700;
         text-align: center;
         line-height: 2;
         sub {
             font-weight: normal;
-            font-size: 1.25rem;
+            font-size: 2.5vh;
             line-height: 1;
         }
         sup {
             font-weight: normal;
-            font-size: 1.25rem;
+            font-size: 2.5vh;
             line-height: 1;
         }
     }
@@ -111,37 +108,37 @@ fieldset {
     }
 }
 #sli {
-    height: 6rem;
+    height: 12vh;
     position: relative;
-    margin: 1rem 0;
+    margin: 3vh 0 4vh 0;
     .markers {
         width: 100%;
-        height: 6rem;
+        height: 12vh;
         display: table;
         table-layout: fixed;
         .marker {
-            border-right: .2rem solid @base2;
+            border-right: 2px solid @base2;
             color: @base3;
             display: table-cell;
             position: relative;
-            height: 6rem;
+            height: 12vh;
             z-index: 3;
             &:first-child {
-                border-left: .1rem solid @base2;
+                border-left: 1px solid @base2;
             }
             &:last-child {
-                border-right: .1rem solid @base2;
+                border-right: 1px solid @base2;
             }
             .rpm {
-                padding: 0 1.5rem;
+                padding: 0 3vw;
                 line-height: 2;
                 font-weight: bold;
-                font-size: 1.5rem;
+                font-size: 3vh;
             }
             .m25,
             .m50,
             .m75 {
-                width: .1rem;
+                width: 1px;
                 background-color: @base2;
                 display: block;
                 position: absolute;
@@ -149,13 +146,13 @@ fieldset {
             }
             .m25,
             .m75 {
-                height: 1rem;
+                height: 2vh;
             }
             .m25 {
                 left: 25%;
             }
             .m50 {
-                height: 2rem;
+                height: 4vh;
                 left: 50%;
             }
             .m75 {
@@ -164,22 +161,21 @@ fieldset {
         }
     }
     .pit {
-        width: 80rem;
-        height: 8rem;
+        width: 100vw;
+        height: 18vh;
         position: absolute;
-        top: -1rem;
-        left: -1rem;
+        top: -4vh;
+        left: -2vw;
         z-index: 5;
         background-color: @blue;
         display: none;
     }
     .shift {
-        width: 80rem;
-        height: 8rem;
+        width: 100vw;
+        height: 18vh;
         position: absolute;
-        top: -1rem;
-        left: -1rem;
-        right: 0;
+        top: -4vh;
+        left: -2vw;
         z-index: 2;
         background-color: @red;
         display: none;
@@ -187,7 +183,7 @@ fieldset {
     .revbar {
         background-color: @blue;
         position: absolute;
-        height: 2.5rem;
+        height: 5vh;
         bottom: 0;
         left: 0;
         z-index: 1;
@@ -198,17 +194,22 @@ fieldset {
     -webkit-app-region: drag;
     -webkit-user-select: none;
     div {
-        font-size: 13rem;
+        font-size: 30vh;
         line-height: 1.25;
         &:hover {
             cursor: move;
         }
     }
 }
+#speed {
+    div {
+        font-size: 3.75vh;
+    }
+}
 #config {
     background-color: @base3;
     color: @base03;
-    margin: 1rem 0;
+    margin: 2vh 0;
 
     .close {
         background-color: @base03;
@@ -216,32 +217,32 @@ fieldset {
         font-weight: bold;
         position: absolute;
         top: 0;
-        right: 1rem;
+        right: 2vw;
         cursor: pointer;
-        width: 3rem;
-        height: 3rem;
+        width: 7.5vmin;
+        height: 7.5vmin;
         text-align: center;
-        line-height: 2;
+        line-height: 7.5vmin;
     }
 
     nav {
-        border-right: .2rem solid @base03;
+        border-right: 2px solid @base03;
 
         ul {
             margin: 0;
             padding: 0;
 
             li {
-                border-bottom: .1rem solid @base03;
+                border-bottom: 1px solid @base03;
                 list-style-type: none;
                 margin: 0;
                 padding: 0;
 
                 a {
                     color: @base03;
-                    font-size: 2rem;
+                    font-size: 4vh;
                     line-height: 2.5;
-                    padding: 0 1rem;
+                    padding: 0 2vw;
                 }
             }
         }
