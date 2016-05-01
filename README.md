@@ -20,11 +20,12 @@ Create a `config.json` file in `%APPDATA%\irdash`. **You have to restart irdash 
     "height": 480,
     "posX": null,
     "posY": null,
+    "fixed": false,
     "debug": false
 }
 ```
 
-By default, irdash launches as a movable `800x480` pixel window which you can drag to your preferred location. If you want it to sit in a fixed position (e.g. offset on an external monitor or as an ingame overlay), you can configure the absolute position in `config.json` by setting the `posX` and `posY` parameters.
+By default, irdash launches as a movable `800x480` pixel window which you can drag to your preferred location. If you want it to sit in a fixed position (e.g. offset on an external monitor or as an ingame overlay), you can configure the absolute position in `config.json` by setting the `posX` and `posY` parameters. To disable moving/dragging, simple set `fixed` to `true`.
 
 ### Parameters
 
