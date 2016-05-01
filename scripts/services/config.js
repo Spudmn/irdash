@@ -12,4 +12,8 @@ Config.prototype.set = function(config) {
     return this.ipc.sendSync('setConfig', config)
 }
 
+Config.prototype.win = function() {
+    return this.ipc.sendSync('getWindow')
+}
+
 window.Config = Config

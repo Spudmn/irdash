@@ -1,0 +1,130 @@
+<div id="renault">
+    <div id="pit" ird-rev-pit>
+        PIT LIMITER
+    </div>
+
+    <div id="revbar" ird-revbar-renault>
+        <div class="marker">
+            <div class="rev blue"></div>
+        </div>
+        <div class="marker">
+            <div class="rev blue"></div>
+        </div>
+        <div class="marker">
+            <div class="rev blue"></div>
+        </div>
+
+        <div class="marker">
+            <div class="rev green"></div>
+        </div>
+        <div class="marker">
+            <div class="rev green"></div>
+        </div>
+        <div class="marker">
+            <div class="rev green"></div>
+        </div>
+        <div class="marker">
+            <div class="rev green"></div>
+        </div>
+        <div class="marker">
+            <div class="rev green"></div>
+        </div>
+        <div class="marker">
+            <div class="rev green"></div>
+        </div>
+        <div class="marker">
+            <div class="rev green"></div>
+        </div>
+        <div class="marker">
+            <div class="rev green"></div>
+        </div>
+        <div class="marker">
+            <div class="rev green"></div>
+        </div>
+        <div class="marker">
+            <div class="rev green"></div>
+        </div>
+        <div class="marker">
+            <div class="rev green"></div>
+        </div>
+        <div class="marker">
+            <div class="rev green"></div>
+        </div>
+        <div class="marker">
+            <div class="rev green"></div>
+        </div>
+        <div class="marker">
+            <div class="rev green"></div>
+        </div>
+        <div class="marker">
+            <div class="rev green"></div>
+        </div>
+        <div class="marker">
+            <div class="rev green"></div>
+        </div>
+        <div class="marker">
+            <div class="rev green"></div>
+        </div>
+        <div class="marker">
+            <div class="rev green"></div>
+        </div>
+        <div class="marker">
+            <div class="rev green"></div>
+        </div>
+        <div class="marker">
+            <div class="rev green"></div>
+        </div>
+        <div class="marker">
+            <div class="rev green"></div>
+        </div>
+        <div class="marker">
+            <div class="rev yellow"></div>
+        </div>
+        <div class="marker">
+            <div class="rev yellow"></div>
+        </div>
+        <div class="marker">
+            <div class="rev yellow"></div>
+        </div>
+        <div class="marker">
+            <div class="rev yellow"></div>
+        </div>
+
+        <div class="marker">
+            <div class="rev red"></div>
+        </div>
+        <div class="marker">
+            <div class="rev red"></div>
+        </div>
+    </div>
+
+    <fieldset id="rpm">
+        <div>{{ ir.RPM | fixed }}</div>
+        <span>RPM</span>
+    </fieldset>
+
+    <fieldset id="gear">
+        <div>{{ ir.Gear | gear }}</div>
+    </fieldset>
+
+    <fieldset id="speed">
+        <span>Speed</span>
+        <div>{{ ir.Speed | speed }}</div>
+    </fieldset>
+
+    <fieldset id="water-oil">
+        <div id="water">
+            <div>{{ ir.WaterTemp | fixed }}</div>
+            <span>WaterT&deg;</span>
+        </div>
+        <div id="oil">
+            <div>{{ ir.OilPress | fixed:2 }}</div>
+            <span>OilP</span>
+        </div>
+    </fieldset>
+
+    <fieldset id="last-lap">
+        <div>{{ ir.LapLastLapTime | lapTime }}</div>
+        <span>Last Lap</span>
+    </fieldset>
+</div>

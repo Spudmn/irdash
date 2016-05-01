@@ -198,7 +198,9 @@
         return {
             link: function(scope, element, attrs) {
                 scope.$watchGroup(['ir.SessionInfo', 'ir.Lap', 'ir.SessionNum'], function(n, o) {
-                    let info = n[0], lap = n[1], num = n[2]
+                    let info = n[0],
+                        lap = n[1],
+                        num = n[2]
                     if (!info || info == null || !lap || lap == null || num == null) {
                         element.text('-')
                         return
@@ -297,7 +299,47 @@
         }
     })
 
-    app.directive('irdRevbar', ['Dashboard', function(Dashboard) {
+    app.directive('irdRevbarRenault', ['Helpers', function(Helpers) {
+        return {
+            restrict: 'AEC',
+            link: function(scope, element, attrs) {
+                const revs = element.children().children()
+                const share = 100 / revs.length
+                scope.$watch('ir.RPM', function(n, o) {
+                    if (!n || n == null) {
+                        return
+                    }
+
+                    let last = scope.last,
+                        shift = scope.shift,
+                        idle = scope.idle,
+                        rpm = n
+
+                    if (rpm >= shift) {
+                        if (!element.hasClass('shift')) {
+                            element.addClass('shift')
+                            return
+                        }
+                    } else {
+                        if (element.hasClass('shift')) {
+                            element.removeClass('shift')
+                        }
+                    }
+
+                    const percent = (rpm - idle) / (last - idle) * 100
+                    angular.forEach(revs, function(rev, index) {
+                        if (percent >= share * index) {
+                            angular.element(rev).css('visibility', 'visible')
+                        } else {
+                            angular.element(rev).css('visibility', 'hidden')
+                        }
+                    })
+                })
+            }
+        }
+    }])
+
+    app.directive('irdRevbarAmgGt3', ['Helpers', function(Helpers) {
         return {
             restrict: 'AEC',
             link: function(scope, element, attrs) {
@@ -306,10 +348,9 @@
                         return
                     }
 
-
                     let revs = scope.revs,
-                        max  = scope.max,
-                        rpm  = n
+                        max = scope.max,
+                        rpm = n
 
                     // max width
                     if (rpm >= max) {
@@ -338,7 +379,7 @@
         }
     }])
 
-    app.directive('irdRevPit', ['Dashboard', function(Dashboard) {
+    app.directive('irdRevPit', ['Helpers', function(Helpers) {
         return {
             restrict: 'AEC',
             link: function(scope, element, attrs) {
@@ -361,7 +402,7 @@
         }
     }])
 
-    app.directive('irdRevShift', ['Dashboard', function(Dashboard) {
+    app.directive('irdRevShift', ['Helpers', function(Helpers) {
         return {
             restrict: 'AEC',
             link: function(scope, element, attrs) {

@@ -7,7 +7,7 @@
         return new window.Config()
     }])
 
-    app.service('iRacing', ['$rootScope', 'Dashboard', function($rootScope, Dashboard) {
+    app.service('iRacing', ['$rootScope', 'Helpers', function($rootScope, Helpers) {
         const ir = new window.IRacing(['DriverInfo', 'SessionInfo', 'WeekendInfo', '__all_telemetry__'], [], 60)
 
         ir.onWSConnect = function() {
@@ -34,14 +34,11 @@
         }
 
         ir.onUpdate = function(keys) {
-            if (keys.indexOf('DriverInfo') >= 0) {
-            }
+            if (keys.indexOf('DriverInfo') >= 0) {}
 
-            if (keys.indexOf('SessionInfo') >= 0) {
-            }
+            if (keys.indexOf('SessionInfo') >= 0) {}
 
-            if (keys.indexOf('WeekendInfo') >= 0) {
-            }
+            if (keys.indexOf('WeekendInfo') >= 0) {}
 
             return $rootScope.$apply()
         }
@@ -49,7 +46,7 @@
         return ir
     }])
 
-    app.service('Dashboard', [function() {
+    app.service('Helpers', [function() {
         return {
             formatLapTime: function(time) {
                 if (null == time || 0 >= time) {
