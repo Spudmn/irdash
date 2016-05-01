@@ -34,4 +34,5 @@ By default, irdash launches as a movable `800x480` pixel window which you can dr
 | height | window height | 480 | pixel |
 | posX | window horizontal position | null | pixel |
 | posY | window vertical position | null | pixel |
+| fixed | disables window moving/dragging | false | bool |
 | debug | for development only | false | bool |
