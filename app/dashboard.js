@@ -2,6 +2,7 @@
 
 const electron = require('electron')
 const jsonfile = require('jsonfile')
+const lodash = require('lodash')
 const path = require('path')
 
 const app = electron.app
@@ -19,7 +20,9 @@ const configFile = path.join(app.getPath('userData'), 'config.json')
 
 function loadConfig() {
     try {
-        config = jsonfile.readFileSync(configFile, { throws: false })
+        config = lodash.extend(defaults, jsonfile.readFileSync(configFile, {
+            throws: false
+        }))
     } catch (err) {
         config = defaults
     }
@@ -31,9 +34,33 @@ ipc.on('getConfig', function(event) {
     event.returnValue = config
 })
 
-ipc.on('setConfig', function(event, config) {
+ipc.on('setConfig', function(event, newConfig) {
+    config = lodash.extend(defaults, config, newConfig)
     jsonfile.writeFileSync(configFile, config)
+
+    mainWindow.setMovable(!config.fixed)
+
+    if (config.width && config.height) {
+        mainWindow.setSize(config.width, config.height)
+    }
+
+    if (config.posX && config.posY) {
+        mainWindow.setPosition(config.posX, config.posY)
+    }
+
     event.returnValue = config
+})
+
+ipc.on('getWindow', function(event) {
+    let size = mainWindow.getSize(),
+        pos = mainWindow.getPosition()
+
+    event.returnValue = {
+        width: size[0],
+        height: size[1],
+        posX: pos[0],
+        posY: pos[1]
+    }
 })
 
 function createWindow(config) {
@@ -46,7 +73,7 @@ function createWindow(config) {
         x: config.debug ? null : config.posX || null,
         y: config.debug ? null : config.posY || null,
 
-        movable: true,
+        movable: config.debug ? true : !config.fixed,
         resizable: config.debug,
         minimizable: config.debug,
         maximizable: config.debug,
@@ -76,7 +103,7 @@ function createWindow(config) {
 
     mainWindow.on('closed', function() {
         mainWindow = null
-    });
+    })
 }
 
 app.on('ready', loadConfig)

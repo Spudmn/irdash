@@ -3,7 +3,7 @@
 
     const app = angular.module('irdFilters', [])
 
-    app.filter('lapTime', ['Dashboard', function(Dashboard) {
+    app.filter('lapTime', ['Helpers', function(Helpers) {
         return function(time) {
             if (null == time || typeof time == 'undefined' || 0 >= time) {
                 return '--'
@@ -13,7 +13,7 @@
                 sec = parseInt(time) - min * 60,
                 ms = parseInt(lodash.split(time.toFixed(min < 9 ? 3 : 2), '.')[1])
 
-            return min + ':' + Dashboard.leftPad(sec, '00') + '.' + Dashboard.leftPad(ms, '000')
+            return min + ':' + Helpers.leftPad(sec, '00') + '.' + Helpers.leftPad(ms, '000')
         }
     }])
 

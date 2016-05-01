@@ -10,6 +10,7 @@
   "main": "dashboard.js",
   "packageNameTemplate": "{{name}}-v{{version}}-{{platform}}-{{arch}}",
   "dependencies": {
-    "jsonfile": "^2.3.0"
+    "jsonfile": "^2.3.0",
+    "lodash": "^4.11.1"
   }
 }

@@ -3,5 +3,6 @@
     "height": 480,
     "posX": null,
     "posY": null,
+    "fixed": false,
     "debug": false
 }
