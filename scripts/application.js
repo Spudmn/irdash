@@ -14,10 +14,6 @@
 
     app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
         $routeProvider
-            .when('/config', {
-                templateUrl: 'views/config.html',
-                controller: 'irdConfigCtrl',
-            })
             .when('/boards', {
                 templateUrl: 'views/boards.html',
                 controller: 'irdBoardsCtrl'
@@ -29,6 +25,14 @@
             .when('/boards/renault', {
                 templateUrl: 'views/boards/renault.html',
                 controller: 'irdRenaultCtrl'
+            })
+            .when('/config', {
+                templateUrl: 'views/config.html',
+                controller: 'irdConfigCtrl',
+            })
+            .when('/shifts', {
+                templateUrl: 'views/shifts.html',
+                controller: 'irdShiftsCtrl'
             })
             .otherwise({
                 redirectTo: '/boards'

@@ -7,8 +7,16 @@
         return new window.Config()
     }])
 
+    app.service('Cars', [function() {
+        return new window.Cars()
+    }])
+
+    app.service('Shifts', [function() {
+        return new window.Shifts()
+    }])
+
     app.service('iRacing', ['$rootScope', 'Helpers', function($rootScope, Helpers) {
-        const ir = new window.IRacing(['DriverInfo', 'SessionInfo', 'WeekendInfo', '__all_telemetry__'], [], 60)
+        const ir = new window.IRacing(['DriverInfo', 'SessionInfo', 'WeekendInfo', '__all_telemetry__'], [], 30)
 
         ir.onWSConnect = function() {
             $rootScope.wsConnected = true

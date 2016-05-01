@@ -17,6 +17,7 @@ let mainWindow
 
 const defaults = jsonfile.readFileSync(path.join(__dirname, 'defaults.json'))
 const configFile = path.join(app.getPath('userData'), 'config.json')
+const cars = jsonfile.readFileSync(path.join(__dirname, 'cars.json'))
 
 function loadConfig() {
     try {
@@ -29,6 +30,31 @@ function loadConfig() {
 
     createWindow(config)
 }
+
+function loadShifts() {
+    try {
+        return jsonfile.readFileSync(path.join(app.getPath('userData'), 'shifts.json'))
+    } catch (err) {
+        return {}
+    }
+}
+
+function saveShifts(shifts) {
+    return jsonfile.writeFileSync(path.join(app.getPath('userData'), 'shifts.json'))
+}
+
+ipc.on('getCars', function(event) {
+    event.returnValue = cars
+})
+
+ipc.on('getShifts', function(event) {
+    event.returnValue = loadShifts()
+})
+
+ipc.on('setShifts', function(event, shifts) {
+    event.returnValue = shifts
+    saveShifts(shifts)
+})
 
 ipc.on('getConfig', function(event) {
     event.returnValue = config

@@ -1,4 +1,4 @@
-(function(angular) {
+(function(angular, lodash) {
     'use strict'
 
     const app = angular.module('irdDirectives', [])
@@ -310,12 +310,11 @@
                         return
                     }
 
-                    let last = scope.last,
-                        shift = scope.shift,
-                        idle = scope.idle,
-                        rpm = n
+                    let blink = scope.blink,
+                        idle  = scope.idle,
+                        rpm   = n
 
-                    if (rpm >= shift) {
+                    if (rpm >= blink) {
                         if (!element.hasClass('shift')) {
                             element.addClass('shift')
                             return
@@ -326,7 +325,7 @@
                         }
                     }
 
-                    const percent = (rpm - idle) / (last - idle) * 100
+                    const percent = (rpm - idle) / (blink - idle) * 100
                     angular.forEach(revs, function(rev, index) {
                         if (percent >= share * index) {
                             angular.element(rev).css('visibility', 'visible')
@@ -348,8 +347,7 @@
                         return
                     }
 
-                    let revs = scope.revs,
-                        max = scope.max,
+                    let max = scope.max,
                         rpm = n
 
                     // max width
@@ -412,7 +410,7 @@
                     }
 
                     let blink = scope.blink,
-                        rpm = n
+                        rpm   = n
 
                     if (rpm >= blink) {
                         if (element.css('display') != 'block') {
@@ -427,4 +425,4 @@
             }
         }
     }])
-})(angular)
+})(angular, _)
