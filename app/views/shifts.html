@@ -4,88 +4,94 @@
         <div class="column column-25">
             <div ng-include="'views/navbar.html'"></div>
         </div>
-        <div id="main" class="column column-50">
+        <div id="main" class="column column-75">
             <h1>Shifts</h1>
             <form>
-                <select ng-model="car">
-                    <option ng-repeat="(id, name) in cars" value="{{id}}">{{name}}</option>
-                </select>
-                <fieldset>
+                <div class="row">
+                    <div class="column column-25">
+                        <label for="selectCar">Car:</label>
+                    </div>
+                    <div class="column column-50">
+                        <select id="selectCar" name="car" ng-model="carId">
+                            <option ng-repeat="car in cars | orderBy:name" value="{{car.id}}">{{car.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <fieldset ng-hide="!carId">
                     <legend>Shift Points</legend>
                     <div class="row">
-                        <div class="column column-50">
+                        <div class="column column-25 column-offset-25">
                             <div class="row">
                                 <div class="column column-25">
-                                    <label for="">1:</label>
+                                    <label for="shiftGear1">1:</label>
                                 </div>
                                 <div class="column column-75">
-                                    <input id="" name="" name="" type="number" ng-model="gears[1]">
+                                    <input id="shiftGear1" name="gear[1]" type="number" ng-model="gears[1]" placeholder="0">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="column column-25">
-                                    <label for="">2:</label>
+                                    <label for="shiftGear2">2:</label>
                                 </div>
                                 <div class="column column-75">
-                                    <input id="" name="" name="" type="number" ng-model="gears[2]">
+                                    <input id="shiftGear2" name="gear[2]" type="number" ng-model="gears[2]" placeholder="0">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="column column-25">
-                                    <label for="">3:</label>
+                                    <label for="shiftGear3">3:</label>
                                 </div>
                                 <div class="column column-75">
-                                    <input id="" name="" name="" type="number" ng-model="gears[3]">
+                                    <input id="shiftGear3" name="gear[3]" type="number" ng-model="gears[3]" placeholder="0">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="column column-25">
-                                    <label for="">4:</label>
+                                    <label for="shiftGear4">4:</label>
                                 </div>
                                 <div class="column column-75">
-                                    <input id="" name="" name="" type="number" ng-model="gears[4]">
+                                    <input id="shiftGear4" name="gear[4]" type="number" ng-model="gears[4]" placeholder="0">
                                 </div>
                             </div>
                         </div>
-                        <div class="column column-50">
-
+                        <div class="column column-25">
                             <div class="row">
                                 <div class="column column-25">
-                                    <label for="">5:</label>
+                                    <label for="shiftGear5">5:</label>
                                 </div>
                                 <div class="column column-75">
-                                    <input id="" name="" name="" type="number" ng-model="gears[5]">
+                                    <input id="shiftGear5" name="gear[5]" type="number" ng-model="gears[5]" placeholder="0">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="column column-25">
-                                    <label for="">6:</label>
+                                    <label for="shiftGear6">6:</label>
                                 </div>
                                 <div class="column column-75">
-                                    <input id="" name="" name="" type="number" ng-model="gears[6]">
+                                    <input id="shiftGear6" name="gear[6]" type="number" ng-model="gears[6]" placeholder="0">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="column column-25">
-                                    <label for="">7:</label>
+                                    <label for="shiftGear7">7:</label>
                                 </div>
                                 <div class="column column-75">
-                                    <input id="" name="" name="" type="number" ng-model="gears[7]">
+                                    <input id="shiftGear7" name="gear[7]" type="number" ng-model="gears[7]" placeholder="0">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="column column-25">
-                                    <label for="">8:</label>
+                                    <label for="shiftGear8">8:</label>
                                 </div>
                                 <div class="column column-75">
-                                    <input id="" name="" name="" type="number" ng-model="gears[8]">
+                                    <input id="shiftGear8" name="gear[8]" type="number" ng-model="gears[8]" placeholder="0">
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="column column-offset-25">
-                            <button class="button-primary" type="submit" ng-click="save(gears)">
+                            <button class="button-primary" type="submit" ng-click="save(shifts)">
                                 Save
                             </button>
                         </div>

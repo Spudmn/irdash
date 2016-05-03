@@ -5,6 +5,8 @@ const jsonfile = require('jsonfile')
 const lodash = require('lodash')
 const path = require('path')
 
+jsonfile.spaces = 2
+
 const app = electron.app
 const ipc = electron.ipcMain
 const psb = require('electron').powerSaveBlocker;
@@ -13,6 +15,7 @@ const psbId = psb.start('prevent-display-sleep')
 const BrowserWindow = electron.BrowserWindow
 
 let config
+let debug
 let mainWindow
 
 const defaults = jsonfile.readFileSync(path.join(__dirname, 'defaults.json'))
@@ -28,6 +31,8 @@ function loadConfig() {
         config = defaults
     }
 
+    debug = config.debug
+
     createWindow(config)
 }
 
@@ -40,7 +45,7 @@ function loadShifts() {
 }
 
 function saveShifts(shifts) {
-    return jsonfile.writeFileSync(path.join(app.getPath('userData'), 'shifts.json'))
+    return jsonfile.writeFileSync(path.join(app.getPath('userData'), 'shifts.json'), shifts)
 }
 
 ipc.on('getCars', function(event) {
@@ -66,12 +71,14 @@ ipc.on('setConfig', function(event, newConfig) {
 
     mainWindow.setMovable(!config.fixed)
 
-    if (config.width && config.height) {
-        mainWindow.setSize(config.width, config.height)
-    }
+    if (!debug) {
+        if (config.width && config.height) {
+            mainWindow.setSize(config.width, config.height)
+        }
 
-    if (config.posX && config.posY) {
-        mainWindow.setPosition(config.posX, config.posY)
+        if (config.posX && config.posY) {
+            mainWindow.setPosition(config.posX, config.posY)
+        }
     }
 
     event.returnValue = config

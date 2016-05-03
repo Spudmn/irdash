@@ -1,12 +1,10 @@
 {
   "private": true,
-  "name": "irdash",
-  "version": "0.3.0",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/pminnieur/irdash.git"
+  "scripts": {
+    "postinstall": "cd app && npm install",
+    "packager": "node_modules/.bin/electron-packager app irdash --platform=win32 --arch=all --out=build --asar --overwrite --prune"
   },
+  "build": {},
   "devDependencies": {
     "asar": "^0.11.0",
     "babel-core": "^6.7.7",
@@ -23,10 +21,5 @@
     "gulp-plumber": "^1.1.0",
     "gulp-uglify": "^1.5.3",
     "less": "^2.6.1"
-  },
-  "scripts": {
-    "postinstall": "cd app && npm install",
-    "electron": "node_modules/.bin/electron --enable-logging app",
-    "packager": "node_modules/.bin/electron-packager app irdash --platform=win32 --arch=all --out=build --asar --overwrite --prune"
   }
 }

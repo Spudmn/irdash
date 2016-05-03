@@ -4,9 +4,17 @@
     const app = angular.module('irdControllers', [])
 
     app.controller('irdCtrl', ['$scope', '$location', function($scope, $location) {
-        $scope.config = function($event, type) {
-            if ($event.ctrlKey && 'Comma' == $event.code) {
-                $location.path('/config')
+        $scope.config = function($event) {
+            if ($event.ctrlKey) {
+                if ('Comma' == $event.code) {
+                    $location.path('/config')
+                }
+                if ('KeyB' == $event.code) {
+                    $location.path('/boards')
+                }
+                if ('KeyS' == $event.code) {
+                    $location.path('/shifts')
+                }
             }
         }
     }])
@@ -15,21 +23,19 @@
     }])
 
     app.controller('irdShiftsCtrl', ['$scope', 'Cars', 'Shifts', function($scope, Cars, Shifts) {
-        const gears = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0}
-
-        $scope.cars = Cars.get()
+        $scope.cars   = Cars.get()
         $scope.shifts = Shifts.get()
 
-        $scope.car = null
-        $scope.gears = gears
+        $scope.carId = null
+        $scope.gears = {}
 
-        $scope.$watch('car', function(n, o) {
+        $scope.$watch('carId', function(n, o) {
             if (!n) {
                 return
             }
 
             if (!$scope.shifts.hasOwnProperty(n)) {
-                $scope.gears = gears
+                $scope.gears = {}
                 return
             }
 
@@ -37,11 +43,16 @@
         })
 
         $scope.$watch('gears', function(n, o) {
-            console.log(JSON.stringify(n))
+            if (!n || !lodash.keys(n).length || !lodash.sum(lodash.values(n))) {
+                delete $scope.shifts[$scope.carId]
+                return
+            }
+
+            $scope.shifts[$scope.carId] = n;
         }, true)
 
         $scope.save = function(shifts) {
-            // $scope.shifts = Shifts.set(shifts)
+            $scope.shifts = Shifts.set(shifts)
         }
     }])
 
@@ -66,13 +77,32 @@
         $scope.idle    = 0
         $scope.drivers = 0
 
+        setTimeout(function() {
+            $scope.max   = 9000
+            $scope.red   = 9000
+            $scope.idle  = 2300
+
+            $scope.ir.RPM   = 5003
+            $scope.ir.Gear  = 4
+            $scope.ir.Speed = 37.8
+
+            $scope.ir.DriverInfo = {
+                DriverCarRedLine: 9000,
+                DriverCarIdx: 1,
+                Drivers: [{
+                    CarIdx: 1,
+                    CarID: 72
+                }]
+            }
+        }, 500)
+
         $scope.$watch('ir.DriverInfo', function(n, o) {
             if (!n || null == n) {
                 return
             }
 
             $scope.revs    = Helpers.numRevs(n.DriverCarRedLine)
-            $scope.max     = (lodash.last($scope.revs)+1) * 1000
+            $scope.max     = Helpers.highestRev($scope.revs)
             $scope.blink   = n.DriverCarSLBlinkRPM
             $scope.shift   = n.DriverCarSLShiftRPM
             $scope.first   = n.DriverCarSLFirstRPM
@@ -81,11 +111,5 @@
             $scope.red     = n.DriverCarRedLine
             $scope.drivers = n.Drivers.length
         })
-    }])
-
-    app.controller('irdAmgGt3Ctrl', ['$scope', function ($scope) {
-    }])
-
-    app.controller('irdRenaultCtrl', ['$scope', function ($scope) {
     }])
 })(angular, _)

@@ -1,20 +1,4 @@
 @import '../solarized.less';
-@keyframes blink-animation {
-    from {
-        visibility: visible;
-    }
-    to {
-        visibility: hidden;
-    }
-}
-@-webkit-keyframes blink-animation {
-    from {
-        visibility: visible;
-    }
-    to {
-        visibility: hidden;
-    }
-}
 #renault {
     #pit {
         background-color: @blue;
@@ -34,14 +18,6 @@
         position: absolute;
         left: 0;
         top: 0;
-        .blink {
-            .marker {
-                .rev {
-                    animation: blink-animation 50ms steps(5, start) infinite alternate;
-                    -webkit-animation: blink-animation 50ms steps(5, start) infinite alternate;
-                }
-            }
-        }
         .marker {
             border-right: 1px solid @base03;
             background-color: @base01;
@@ -200,7 +176,7 @@
             .rev {
                 width: 100%;
                 height: 100%;
-                visibility: hidden;
+                display: none;
                 &.blue {
                     background-color: @blue;
                 }
@@ -215,11 +191,11 @@
                 }
             }
         }
-        &.blink,
         &.shift {
             .marker {
                 .rev {
                     background-color: @red;
+                    display: block;
                 }
             }
         }

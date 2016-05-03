@@ -1,14 +1,27 @@
 'use strict'
 
+const electron = require('electron')
+
 const Config = function() {
-    this.ipc = require('electron').ipcRenderer
+    this.ipc  = electron.ipcRenderer
+    this.load = true
+    this.data = {}
+
+    this.get()
 }
 
 Config.prototype.get = function() {
-    return this.ipc.sendSync('getConfig')
+    if (this.load) {
+        this.data = this.ipc.sendSync('getConfig')
+        this.load = false
+    }
+
+    return this.data
 }
 
 Config.prototype.set = function(config) {
+    this.load = true
+
     return this.ipc.sendSync('setConfig', config)
 }
 

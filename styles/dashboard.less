@@ -12,7 +12,6 @@ html {
 }
 body {
     font-family: 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-    background-color: @base3;
     position: relative;
     margin: 0;
     padding: 0;
@@ -20,18 +19,44 @@ body {
 #dashboard {
     overflow: hidden;
     background-color: @base03;
+    color: @base3;
     width: 100%;
     height: 100%;
+}
+a {
+    color: @cyan;
+}
+.button,
+button,
+input[type=button],
+input[type=reset],
+input[type=submit] {
+    &.button-primary {
+        border-color: @cyan;
+        background-color: @cyan;
+    }
+}
+
+input[type=email],
+input[type=number],
+input[type=password],
+input[type=search],
+input[type=tel],
+input[type=text],
+input[type=url],
+option,
+select,
+textarea {
+    background-color: @base03;
+    color: @base3;
+    &:focus {
+        border-color: @cyan;
+    }
 }
 #boards,
 #config,
 #shifts {
-    background-color: @base3;
-    color: @base03;
-    margin: 2vh 0;
     .close {
-        background-color: @base03;
-        color: @base3;
         font-weight: bold;
         position: absolute;
         top: 0;
@@ -53,7 +78,6 @@ body {
                 margin: 0;
                 padding: 0;
                 a {
-                    color: @base03;
                     font-size: 4vh;
                     line-height: 2.5;
                     padding: 0 2vw;
@@ -75,4 +99,7 @@ body {
             }
         }
     }
+}
+#shifts {
+    #main {}
 }

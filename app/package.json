@@ -5,12 +5,16 @@
   "license": "MIT",
   "productName": "irdash",
   "description": "iRacing Dashboard",
-  "author": "Pierre Minnieur",
+  "author": "Pierre Minnieur <pm@pierre-minnieur.de>",
   "copyright": "(c) 2016, Pierre Minnieur",
   "main": "dashboard.js",
   "packageNameTemplate": "{{name}}-v{{version}}-{{platform}}-{{arch}}",
   "dependencies": {
+    "angular": "^1.5.5",
+    "angular-route": "^1.5.5",
+    "angular-websocket": "^1.1.0",
+    "jquery": "^2.2.3",
     "jsonfile": "^2.3.0",
-    "lodash": "^4.11.1"
+    "lodash": "^4.11.2"
   }
 }

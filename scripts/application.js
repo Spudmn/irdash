@@ -9,7 +9,11 @@
         'irdControllers',
         'irdDirectives',
         'irdServices',
-        'irdFilters'
+        'irdFilters',
+
+        // boards
+        'irdAmgGt3',
+        'irdRenault'
     ])
 
     app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {

@@ -5,15 +5,7 @@
 
     app.filter('lapTime', ['Helpers', function(Helpers) {
         return function(time) {
-            if (null == time || typeof time == 'undefined' || 0 >= time) {
-                return '--'
-            }
-
-            let min = parseInt(time / 60),
-                sec = parseInt(time) - min * 60,
-                ms = parseInt(lodash.split(time.toFixed(min < 9 ? 3 : 2), '.')[1])
-
-            return min + ':' + Helpers.leftPad(sec, '00') + '.' + Helpers.leftPad(ms, '000')
+            return Helpers.formatLapTime(time)
         }
     }])
 

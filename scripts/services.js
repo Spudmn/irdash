@@ -55,32 +55,6 @@
     }])
 
     app.service('Helpers', [function() {
-        return {
-            formatLapTime: function(time) {
-                if (null == time || 0 >= time) {
-                    return '--'
-                }
-
-                let min = parseInt(time / 60),
-                    sec = parseInt(time) - min * 60,
-                    ms = parseInt(lodash.split(time.toFixed(min < 10 ? 3 : 2), '.')[1])
-
-                return min + ':' + this.leftPad(sec, '00') + '.' + this.leftPad(ms, '000')
-            },
-
-            leftPad: function(str, pad) {
-                str = str.toString()
-
-                return pad.substring(0, pad.length - str.length) + str
-            },
-
-            numRevs: function(redLine) {
-                return lodash.range(0, this.highestRev(redLine))
-            },
-
-            highestRev: function(rev) {
-                return Math.ceil(rev / 1000).toFixed(0)
-            }
-        }
+        return new window.Helpers()
     }])
 })(window, angular, _)
