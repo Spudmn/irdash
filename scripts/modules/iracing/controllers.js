@@ -7,7 +7,12 @@
         $scope.save = function(kutu) {
             Kutu.set(kutu)
 
-            iRacing.connect(Kutu.host, Kutu.fps, Kutu.ibt)
+            iRacing.server = Kutu.host
+            iRacing.fps = Kutu.fps
+            iRacing.ibt  = Kutu.ibt
+
+            iRacing.disconnect()
+            iRacing.connect()
         }
     }])
 }

@@ -10,7 +10,7 @@ You also need to run the iRacing Browser Apps server which can be downloaded fro
 
 ## Customization
 
-Create a `config.json` file in `%APPDATA%\irdash`. **You have to restart irdash every time you change the configuration.**
+Create a `window.json` file in `%APPDATA%\irdash`. **You have to restart irdash every time you change the configuration.**
 
 ### Configuration
 
@@ -25,7 +25,7 @@ Create a `config.json` file in `%APPDATA%\irdash`. **You have to restart irdash 
 }
 ```
 
-By default, irdash launches as a movable `800x480` pixel window which you can drag to your preferred location. If you want it to sit in a fixed position (e.g. offset on an external monitor or as an ingame overlay), you can configure the absolute position in `config.json` by setting the `posX` and `posY` parameters. To disable moving/dragging, simple set `fixed` to `true`.
+By default, irdash launches as a movable `800x480` pixel window which you can drag to your preferred location. If you want it to sit in a fixed position (e.g. offset on an external monitor or as an ingame overlay), you can configure the absolute position in `window.json` by setting the `posX` and `posY` parameters. To disable moving/dragging, simple set `fixed` to `true`.
 
 ### Parameters
 

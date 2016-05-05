@@ -10,7 +10,7 @@
 Start an iRacing replay or test on track and put iRacing into windowed mode. Enable the `debug` flag in your `config.json` and launch it:
 
 ``` bash
-$ gulp run
+$ npm run electron
 ```
 
 You now have the developer toolbar and a bigger window to work with.
@@ -32,5 +32,5 @@ $ gulp watch # build on file change
 ### Electron
 
 ``` bash
-$ gulp build
+$ npm run packager
 ```

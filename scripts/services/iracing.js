@@ -1,62 +1,5 @@
 const EventEmitter = require('events')
 
-class iRacingWrapper extends EventEmitter {
-    constructor() {
-        super()
-
-        this.ir = null
-        this.data = {}
-    }
-
-    connect(server = '127.0.0.1:8182', fps = 30, ibt = false) {
-        this.disconnect()
-
-        if (!this.ir) {
-            this.ir = new iRacing(server, ['DriverInfo', 'SessionInfo', 'WeekendInfo', '__all_telemetry__'], [], fps, ibt)
-
-            this.ir.on('open', () => {
-                this.emit('open')
-            })
-            this.ir.on('close', () => {
-                this.emit('close')
-            })
-            this.ir.on('start', () => {
-                this.emit('start')
-            })
-            this.ir.on('stop', () => {
-                this.emit('stop')
-            })
-            this.ir.on('error', (err) => {
-                this.emit('error', err)
-            })
-            this.ir.on('update', (keys) => {
-                _.each(keys, (key) => {
-                    this.data[key] = this.ir.data[key]
-                })
-
-                this.emit('update', keys)
-            })
-        } else {
-            this.ir.server = server
-            this.ir.fps = fps
-            this.ir.ibt = ibt
-
-            this.ir.connect()
-
-        }
-    }
-
-    disconnect() {
-        if (this.ir) {
-            this.ir.disconnect()
-
-            _.forIn(this.data, (value, key) => {
-                delete(this.data[key])
-            })
-        }
-    }
-}
-
 class iRacing extends EventEmitter {
     constructor(server = '127.0.0.1:8182', params = [], once = [], fps = 30, ibt = false) {
         super()
@@ -103,10 +46,22 @@ class iRacing extends EventEmitter {
             this.ws = null
         }
 
+        this.firstTime = true
+        this.connected = false
+
+        if (this.running) {
+            this.running = false
+            this.emit('stop')
+        }
+
         if (this.reconnect) {
             clearTimeout(this.reconnect)
             this.reconnect = null
         }
+
+        _.forIn(this.data, (value, key) => {
+            delete(this.data[key])
+        })
     }
 
     open() {
@@ -131,6 +86,7 @@ class iRacing extends EventEmitter {
 
     close() {
         this.emit('close')
+
         if (this.running) {
             this.running = false
             this.emit('stop')

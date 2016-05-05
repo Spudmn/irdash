@@ -6,7 +6,10 @@
     }])
 
     app.service('iRacing', ['$rootScope', 'Kutu', function($rootScope, Kutu) {
-        const ir = new iRacingWrapper()
+        let params = ['DriverInfo', 'SessionInfo', 'WeekendInfo', '__all_telemetry__']
+        let once = [] // @todo collect these from dashboards & services/providers
+
+        const ir = new iRacing(Kutu.host, params, once, Kutu.fps, Kutu.ibt)
 
         ir.on('open', () => {
             $rootScope.opened = true
@@ -30,8 +33,6 @@
         ir.on('update', (keys) => {
             $rootScope.$apply()
         })
-
-        ir.connect(Kutu.host, Kutu.fps, Kutu.ibt)
 
         return ir
     }])

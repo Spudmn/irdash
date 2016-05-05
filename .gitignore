@@ -1,7 +1,4 @@
-build/*
-cache/*
-dist/*
+build
 node_modules
 npm-debug.log
-.vscode
-!.gitkeep
+!*.gitkeep

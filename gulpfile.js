@@ -5,13 +5,9 @@ const cleanCss = require('gulp-clean-css')
 const del = require('del')
 const gulp = require('gulp')
 const concat = require('gulp-concat')
-const electron = require('gulp-electron')
 const less = require('gulp-less')
 const plumber = require('gulp-plumber')
 const uglify = require('gulp-uglify')
-
-const child = require('child_process')
-const prebuilt = require('electron-prebuilt')
 
 const path = require('path')
 
@@ -30,36 +26,6 @@ const dests = {
     styles: path.join(__dirname, 'app', 'styles'),
     scripts: path.join(__dirname, 'app', 'scripts'),
 }
-
-gulp.task('run', function () {
-    child.spawn(prebuilt, ['--debug=5858', path.join(__dirname, 'app')], { stdio: 'inherit' });
-})
-
-const packageJson = require('./app/package.json')
-
-gulp.task('build', function() {
-    return gulp.src('')
-        .pipe(electron({
-            src: path.join(__dirname, 'app'),
-            packageJson: packageJson,
-            release: path.join(__dirname, 'build'),
-            cache: path.join(__dirname, 'cache'),
-            version: 'v0.37.6',
-            packaging: true,
-            rebuild: true,
-            asar: true,
-            platforms: ['win32-ia32', 'win32-x64'],
-            platformResources: {
-                win: {
-                    "version-string": packageJson.version,
-                    "file-version": packageJson.version,
-                    "product-version": packageJson.version,
-                    "icon": 'gulp-electron.ico'
-                }
-            }
-        }))
-        .pipe(gulp.dest(''))
-})
 
 gulp.task('watch', function() {
     gulp.watch(paths.scripts, ['scripts'])
