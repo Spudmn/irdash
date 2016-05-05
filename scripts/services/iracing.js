@@ -95,7 +95,10 @@ class iRacing extends EventEmitter {
 
     disconnect() {
         if (this.ws) {
-            this.ws.onopen = this.ws.onmessage = this.ws.onclose = null
+            this.ws.onopen = null
+            this.ws.onmessage = null
+            this.ws.onclose = null
+            this.ws.onerror = null
             this.ws.close()
             this.ws = null
         }

@@ -580,7 +580,10 @@ var iRacing = function (_EventEmitter2) {
         key: 'disconnect',
         value: function disconnect() {
             if (this.ws) {
-                this.ws.onopen = this.ws.onmessage = this.ws.onclose = null;
+                this.ws.onopen = null;
+                this.ws.onmessage = null;
+                this.ws.onclose = null;
+                this.ws.onerror = null;
                 this.ws.close();
                 this.ws = null;
             }
@@ -1314,34 +1317,6 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 'use strict';
 
 {
-    var app = angular.module('ir.internal.dashboards.controllers', []);
-
-    app.controller('DashboardsCtrl', ['$scope', function ($scope) {}]);
-}
-'use strict';
-
-{
-    var app = angular.module('ir.internal.dashboards', ['ir.internal.dashboards.controllers', 'ir.internal.dashboards.services']);
-
-    app.config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/config/dashboards', {
-            templateUrl: 'views/dashboards.html',
-            controller: 'DashboardsCtrl'
-        });
-    }]);
-}
-'use strict';
-
-{
-    var app = angular.module('ir.internal.dashboards.services', []);
-
-    app.service('Boards', [function () {
-        return new window.Boards();
-    }]);
-}
-'use strict';
-
-{
     var app = angular.module('ir.internal.iracing.controllers', []);
 
     app.controller('iRacingCtrl', ['$scope', 'Kutu', 'iRacing', function ($scope, Kutu, iRacing) {
@@ -1377,6 +1352,34 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 'use strict';
 
 {
+    var app = angular.module('ir.internal.dashboards.controllers', []);
+
+    app.controller('DashboardsCtrl', ['$scope', function ($scope) {}]);
+}
+'use strict';
+
+{
+    var app = angular.module('ir.internal.dashboards', ['ir.internal.dashboards.controllers', 'ir.internal.dashboards.services']);
+
+    app.config(['$routeProvider', function ($routeProvider) {
+        $routeProvider.when('/config/dashboards', {
+            templateUrl: 'views/dashboards.html',
+            controller: 'DashboardsCtrl'
+        });
+    }]);
+}
+'use strict';
+
+{
+    var app = angular.module('ir.internal.dashboards.services', []);
+
+    app.service('Boards', [function () {
+        return new window.Boards();
+    }]);
+}
+'use strict';
+
+{
     var app = angular.module('ir.internal.shift_lights.controllers', []);
 
     app.controller('ShiftLightsCtrl', ['$scope', function ($scope) {}]);
@@ -1397,6 +1400,41 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 {
     var app = angular.module('ir.internal.shift_lights.services', []);
+}
+'use strict';
+
+{
+    var app = angular.module('ir.internal.window.controllers', []);
+
+    app.controller('WindowCtrl', ['$scope', 'Config', function ($scope, Config) {
+        $scope.config = Config.get();
+        $scope.window = Config.win();
+
+        $scope.save = function (config) {
+            $scope.config = Config.set(config);
+        };
+    }]);
+}
+'use strict';
+
+{
+    var app = angular.module('ir.internal.window', ['ir.internal.window.controllers', 'ir.internal.window.services']);
+
+    app.config(['$routeProvider', function ($routeProvider) {
+        $routeProvider.when('/config/window', {
+            templateUrl: 'views/window.html',
+            controller: 'WindowCtrl'
+        });
+    }]);
+}
+'use strict';
+
+{
+    var app = angular.module('ir.internal.window.services', []);
+
+    app.service('Config', [function () {
+        return new Config();
+    }]);
 }
 'use strict';
 
@@ -1456,40 +1494,5 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
     app.service('ShiftPoints', [function () {
         return new ShiftPoints();
-    }]);
-}
-'use strict';
-
-{
-    var app = angular.module('ir.internal.window.controllers', []);
-
-    app.controller('WindowCtrl', ['$scope', 'Config', function ($scope, Config) {
-        $scope.config = Config.get();
-        $scope.window = Config.win();
-
-        $scope.save = function (config) {
-            $scope.config = Config.set(config);
-        };
-    }]);
-}
-'use strict';
-
-{
-    var app = angular.module('ir.internal.window', ['ir.internal.window.controllers', 'ir.internal.window.services']);
-
-    app.config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/config/window', {
-            templateUrl: 'views/window.html',
-            controller: 'WindowCtrl'
-        });
-    }]);
-}
-'use strict';
-
-{
-    var app = angular.module('ir.internal.window.services', []);
-
-    app.service('Config', [function () {
-        return new Config();
     }]);
 }
