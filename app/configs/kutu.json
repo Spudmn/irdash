@@ -1,0 +1,5 @@
+{
+    "host": "localhost:8182",
+    "fps": 30,
+    "ibt": false
+}

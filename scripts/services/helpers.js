@@ -1,10 +1,8 @@
-(function(window, _) {
-    'use strict'
-
-    const Helpers = function() {
+class Helpers {
+    constructor() {
     }
 
-    Helpers.prototype.formatLapTime = function(time) {
+    /* static */ formatLapTime(time) {
         if (null == time || 0 >= time) {
             return '--'
         }
@@ -16,17 +14,15 @@
         return min + ':' + this.leftPad(sec, 2) + '.' + this.leftPad(ms, 3)
     }
 
-    Helpers.prototype.leftPad = function(str, pad) {
+    /* static */ leftPad(str, pad) {
         return _.padStart(str, pad, 0)
     }
 
-    Helpers.prototype.numRevs = function(redLine) {
+    /* static */ numRevs(redLine) {
         return _.range(0, _.ceil(redLine / 1000))
     }
 
-    Helpers.prototype.highestRev = function(revs) {
+    /* static */ highestRev(revs) {
         return (_.last(revs) + 1) * 1000
     }
-
-    window.Helpers = Helpers
-})(window, _)
+}

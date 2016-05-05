@@ -1,20 +1,18 @@
-'use strict'
+class Cars {
+    constructor() {
+        this.ipc = require('electron').ipcRenderer
+        this.load = true
+        this.data = {}
 
-const Cars = function() {
-    this.ipc = require('electron').ipcRenderer
-    this.load = true
-    this.data = {}
-
-    this.get()
-}
-
-Cars.prototype.get = function() {
-    if (this.load) {
-        this.data = this.ipc.sendSync('getCars')
-        this.load = false
+        this.get()
     }
 
-    return this.data
-}
+    get() {
+        if (this.load) {
+            this.data = this.ipc.sendSync('getCars')
+            this.load = false
+        }
 
-window.Cars = Cars
+        return this.data
+    }
+}

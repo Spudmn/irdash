@@ -5,19 +5,20 @@ const cleanCss = require('gulp-clean-css')
 const del = require('del')
 const gulp = require('gulp')
 const concat = require('gulp-concat')
+const electron = require('gulp-electron')
 const less = require('gulp-less')
 const plumber = require('gulp-plumber')
 const uglify = require('gulp-uglify')
 
 const child = require('child_process')
-const electron = require('electron-prebuilt')
+const prebuilt = require('electron-prebuilt')
+
 const path = require('path')
 
 const paths = {
     styles: path.join(__dirname, 'styles', '**', '*.less'),
     scripts: path.join(__dirname, 'scripts', '**', '*.js'),
     vendors: [
-        path.join(__dirname, 'app', 'node_modules', 'jquery', 'dist', 'jquery.js'),
         path.join(__dirname, 'app', 'node_modules', 'lodash', 'lodash.js'),
         path.join(__dirname, 'app', 'node_modules', 'angular', 'angular.js'),
         path.join(__dirname, 'app', 'node_modules', 'angular-route', 'angular-route.js'),
@@ -31,7 +32,33 @@ const dests = {
 }
 
 gulp.task('run', function () {
-  child.spawn(electron, ['--debug=5858', path.join(__dirname, 'app')], { stdio: 'inherit' });
+    child.spawn(prebuilt, ['--debug=5858', path.join(__dirname, 'app')], { stdio: 'inherit' });
+})
+
+const packageJson = require('./app/package.json')
+
+gulp.task('build', function() {
+    return gulp.src('')
+        .pipe(electron({
+            src: path.join(__dirname, 'app'),
+            packageJson: packageJson,
+            release: path.join(__dirname, 'build'),
+            cache: path.join(__dirname, 'cache'),
+            version: 'v0.37.6',
+            packaging: true,
+            rebuild: true,
+            asar: true,
+            platforms: ['win32-ia32', 'win32-x64'],
+            platformResources: {
+                win: {
+                    "version-string": packageJson.version,
+                    "file-version": packageJson.version,
+                    "product-version": packageJson.version,
+                    "icon": 'gulp-electron.ico'
+                }
+            }
+        }))
+        .pipe(gulp.dest(''))
 })
 
 gulp.task('watch', function() {
@@ -49,21 +76,22 @@ gulp.task('clean', function() {
 gulp.task('styles', function() {
     return gulp.src(paths.styles)
         .pipe(plumber({
-            handleError: function(err) {
+            errorHandler: function(err) {
                 console.log(err)
                 this.emit('end')
             }
         }))
         .pipe(less())
         .pipe(cleanCss())
-        .pipe(concat('dashboard.css'))
+        .pipe(concat('irdash.css'))
+        .pipe(plumber.stop())
         .pipe(gulp.dest(dests.styles))
 })
 
 gulp.task('scripts', function() {
     return gulp.src(paths.scripts)
         .pipe(plumber({
-            handleError: function(err) {
+            errorHandler: function(err) {
                 console.log(err)
                 this.emit('end')
             }
@@ -72,19 +100,22 @@ gulp.task('scripts', function() {
             presets: ['es2015', 'angular']
         }))
         .pipe(uglify())
-        .pipe(concat('dashboard.js'))
+        .pipe(concat('irdash.js'))
+        .pipe(plumber.stop())
         .pipe(gulp.dest(dests.scripts))
 })
 
 gulp.task('vendors', function() {
     return gulp.src(paths.vendors)
         .pipe(plumber({
-            handleError: function(err) {
+            errorHandler: function(err) {
                 console.log(err)
                 this.emit('end')
             }
         }))
+        .pipe(uglify())
         .pipe(concat('vendors.js'))
+        .pipe(plumber.stop())
         .pipe(gulp.dest(dests.scripts))
 })
 
