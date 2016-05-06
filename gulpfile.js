@@ -16,9 +16,9 @@ const paths = {
     scripts: path.join(__dirname, 'scripts', '**', '*.js'),
     vendors: [
         path.join(__dirname, 'app', 'node_modules', 'lodash', 'lodash.js'),
-        path.join(__dirname, 'app', 'node_modules', 'angular', 'angular.js'),
-        path.join(__dirname, 'app', 'node_modules', 'angular-route', 'angular-route.js'),
-        path.join(__dirname, 'app', 'node_modules', 'angular-websocket', 'angular-websocket.js'),
+        path.join(__dirname, 'node_modules', 'angular', 'angular.js'),
+        path.join(__dirname, 'node_modules', 'angular-route', 'angular-route.js'),
+        path.join(__dirname, 'node_modules', 'angular-websocket', 'angular-websocket.js'),
     ]
 }
 

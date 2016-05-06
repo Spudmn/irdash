@@ -11,9 +11,6 @@
   "main": "irdash.js",
   "packageNameTemplate": "{{name}}-v{{version}}-{{platform}}-{{arch}}",
   "dependencies": {
-    "angular": "^1.5.5",
-    "angular-route": "^1.5.5",
-    "angular-websocket": "^1.1.0",
     "jsonfile": "^2.3.0",
     "lodash": "^4.11.2"
   }

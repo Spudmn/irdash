@@ -19,6 +19,9 @@
       "app": "app"
   },
   "devDependencies": {
+    "angular": "^1.5.5",
+    "angular-route": "^1.5.5",
+    "angular-websocket": "^1.1.0",
     "asar": "^0.11.0",
     "babel-core": "^6.7.7",
     "babel-preset-angular": "^6.0.15",
