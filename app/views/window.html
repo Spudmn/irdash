@@ -1,0 +1,78 @@
+<div id="window" class="container">
+    <div class="close" ird-back>&times;</div>
+    <div class="row">
+        <div class="column column-25">
+            <div ng-include="'views/_includes/navigation.html'"></div>
+        </div>
+        <div id="main" class="column column-75">
+            <h1>Window</h1>
+            <form>
+                <fieldset>
+                    <div class="row">
+                        <div class="column column-25">
+                            <label for="configWindowWidth">Width</label>
+                        </div>
+                        <div class="column column-20">
+                            <input id="configWindowWidth" name="width" type="number" ng-model="config.width">
+                        </div>
+                        <div class="column column-15">
+                            <span>{{ window.width }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column column-25">
+                            <label for="configWindowHeight">Height</label>
+                        </div>
+                        <div class="column column-20">
+                            <input id="configWindowHeight" name="height" name="height" type="number" ng-model="config.height">
+                        </div>
+                        <div class="column column-15">
+                            <span>{{ window.height }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column column-25">
+                            <label for="configWindowPosX">Position X</label>
+                        </div>
+                        <div class="column column-20">
+                            <input id="configWindowPosX" name="posX" type="number" ng-model="config.posX">
+                        </div>
+                        <div class="column column-15">
+                            <span>{{ window.posX }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column column-25">
+                            <label for="configWindowPosY">Position Y</label>
+                        </div>
+                        <div class="column column-20">
+                            <input id="configWindowPosY" name="posY" type="number" ng-model="config.posY">
+                        </div>
+                        <div class="column column-15">
+                            <span>{{ window.posY }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column column-offset-25">
+                            <input id="configWindowFixed" name="fixed" type="checkbox" ng-model="config.fixed">
+                            <label class="label-inline" for="configWindowFixed">fixed window position</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column column-offset-25">
+                            <input id="configWindowDebug" name="debug" type="checkbox" ng-model="config.debug">
+                            <label class="label-inline" for="configWindowDebug">enable debug mode</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column column-offset-25">
+                            <button class="button-primary" type="submit" ng-click="save(config)">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

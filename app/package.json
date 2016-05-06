@@ -1,16 +1,17 @@
 {
   "private": true,
   "name": "irdash",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "license": "MIT",
   "productName": "irdash",
   "description": "iRacing Dashboard",
-  "author": "Pierre Minnieur",
+  "homepage": "https://github.com/pminnieur/irdash",
+  "author": "Pierre Minnieur <pm@pierre-minnieur.de>",
   "copyright": "(c) 2016, Pierre Minnieur",
-  "main": "dashboard.js",
+  "main": "irdash.js",
   "packageNameTemplate": "{{name}}-v{{version}}-{{platform}}-{{arch}}",
   "dependencies": {
     "jsonfile": "^2.3.0",
-    "lodash": "^4.11.1"
+    "lodash": "^4.11.2"
   }
 }

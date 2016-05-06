@@ -1,0 +1,61 @@
+<div id="iracing" class="container">
+    <div class="close" ird-back>&times;</div>
+    <div class="row">
+        <div class="column column-25">
+            <div ng-include="'views/_includes/navigation.html'"></div>
+        </div>
+        <div id="main" class="column column-75">
+            <h1>iRacing</h1>
+            <form>
+                <fieldset>
+                    <div class="row">
+                        <div class="column column-25">
+                            <label for="kutuHost">Host:</label>
+                        </div>
+                        <div class="column column-50">
+                            <input id="kutuHost" name="host" type="text" placeholder="localhost:8182" ng-model="kutu.host">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column column-25">
+                            <label for="kutuFps">FPS:</label>
+                        </div>
+                        <div class="column column-50">
+                            <input id="kutuFps" name="fps" type="number" placeholder="30" ng-model="kutu.fps">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column column-50 column-offset-25">
+                            <input id="kutuIbt" name="ibt" type="checkbox" ng-model="kutu.ibt">
+                            <label class="label-inline" for="kutuIbt">read IBT files</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column column-offset-25">
+                            <button class="button-primary" type="submit" ng-click="save(kutu)">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="column column-25">
+                            <label>Connection:</label>
+                        </div>
+                        <div class="column column-50">
+                            {{ opened ? 'connected' : 'waiting' }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column column-25">
+                            <label>iRacing:</label>
+                        </div>
+                        <div class="column column-50">
+                            {{ started ? 'running' : 'waiting' }}
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

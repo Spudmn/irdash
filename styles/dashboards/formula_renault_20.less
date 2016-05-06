@@ -1,0 +1,285 @@
+@import '../themes/solarized.less';
+#formula_renault_20 {
+    &.container {
+        max-width: 100%;
+        padding: 0 2vw;
+    }
+    #pit {
+        background-color: @blue;
+        color: @base03;
+        font-size: 20vh;
+        text-align: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        line-height: 40vh;
+        display: none;
+        width: 100vw;
+        height: 40vh;
+        z-index: 1;
+    }
+    #revbar {
+        position: absolute;
+        left: 0;
+        top: 0;
+        .marker {
+            border-right: 1px solid @base03;
+            background-color: @base01;
+            position: absolute;
+            width: 2.5vw;
+            &:first-child {
+                top: 26vh;
+                left: 2vw;
+                height: 9vh;
+            }
+            &:nth-child(2) {
+                top: 20vh;
+                left: 4.5vw;
+                height: 10vh;
+            }
+            &:nth-child(3) {
+                top: 15vh;
+                left: 7vw;
+                height: 11vh;
+            }
+            &:nth-child(4) {
+                top: 11vh;
+                left: 9.5vw;
+                height: 13vh;
+            }
+            &:nth-child(5) {
+                top: 8vh;
+                left: 12vw;
+                height: 14vh;
+            }
+            &:nth-child(6) {
+                top: 6vh;
+                left: 14.5vw;
+                height: 14.5vh;
+            }
+            &:nth-child(7) {
+                top: 4.5vh;
+                left: 17vw;
+                height: 15vh;
+            }
+            &:nth-child(8) {
+                top: 3.5vh;
+                left: 19.5vw;
+                height: 15vh;
+            }
+            &:nth-child(9) {
+                top: 3vh;
+                left: 22vw;
+                height: 15vh;
+            }
+            &:nth-child(10) {
+                top: 3vh;
+                left: 24.5vw;
+                height: 15vh;
+            }
+            &:nth-child(11) {
+                top: 3vh;
+                left: 27vw;
+                height: 15.5vh;
+            }
+            &:nth-child(12) {
+                top: 3vh;
+                left: 29.5vw;
+                height: 16vh;
+            }
+            &:nth-child(13) {
+                top: 3vh;
+                left: 32vw;
+                height: 16.5vh;
+            }
+            &:nth-child(14) {
+                top: 3vh;
+                left: 34.5vw;
+                height: 17vh;
+            }
+            &:nth-child(15) {
+                top: 3vh;
+                left: 37vw;
+                height: 17.5vh;
+            }
+            &:nth-child(16) {
+                top: 3vh;
+                left: 39.5vw;
+                height: 18vh;
+            }
+            &:nth-child(17) {
+                top: 3.5vh;
+                left: 42vw;
+                height: 18vh;
+            }
+            &:nth-child(18) {
+                top: 3.5vh;
+                left: 44.5vw;
+                height: 18.5vh;
+            }
+            &:nth-child(19) {
+                top: 4vh;
+                left: 47vw;
+                height: 18.5vh;
+            }
+            &:nth-child(20) {
+                top: 4vh;
+                left: 49.5vw;
+                height: 19vh;
+            }
+            &:nth-child(21) {
+                top: 4vh;
+                left: 52vw;
+                height: 19.5vh;
+            }
+            &:nth-child(22) {
+                top: 4.5vh;
+                left: 54.5vw;
+                height: 19.5vh;
+            }
+            &:nth-child(23) {
+                top: 4.5vh;
+                left: 57vw;
+                height: 20vh;
+            }
+            &:nth-child(24) {
+                top: 4.5vh;
+                left: 59.5vw;
+                height: 20.5vh;
+            }
+            &:nth-child(25) {
+                top: 5vh;
+                left: 62vw;
+                height: 20.5vh;
+            }
+            &:nth-child(26) {
+                top: 5vh;
+                left: 64.5vw;
+                height: 21vh;
+            }
+            &:nth-child(27) {
+                top: 5.5vh;
+                left: 67vw;
+                height: 21vh;
+            }
+            &:nth-child(28) {
+                top: 5.5vh;
+                left: 69.5vw;
+                height: 21.5vh;
+            }
+            &:nth-child(29) {
+                top: 5.5vh;
+                left: 72vw;
+                height: 22vh;
+            }
+            &:last-child {
+                top: 5.5vh;
+                left: 74.5vw;
+                height: 22.5vh;
+            }
+            .rev {
+                width: 100%;
+                height: 100%;
+                display: none;
+                &.blue {
+                    background-color: @blue;
+                }
+                &.green {
+                    background-color: @green;
+                }
+                &.yellow {
+                    background-color: @yellow;
+                }
+                &.red {
+                    background-color: @red;
+                }
+            }
+        }
+        &.shift {
+            .marker {
+                .rev {
+                    background-color: @red;
+                    display: block;
+                }
+            }
+        }
+    }
+    fieldset {
+        border: 0.25vmin solid @base01;
+        border-radius: 3vmin;
+        margin: 0;
+        padding: 2vh 2vw;
+        position: absolute;
+        div {
+            color: @base2;
+            font-size: 10vh;
+            line-height: 1;
+            text-align: center;
+        }
+        span {
+            color: @base01;
+            display: block;
+            font-size: 5vh;
+            line-height: 1;
+            text-align: center;
+        }
+    }
+    #rpm {
+        top: 2vh;
+        right: 2vw;
+        div {
+            line-height: 1.5;
+        }
+        span {
+            line-height: 2;
+        }
+    }
+    #gear {
+        bottom: -80vh;
+        left: 50vw;
+        width: 20vw;
+        margin: 0 0 0 -10vw;
+        -webkit-app-region: drag;
+        -webkit-user-select: none;
+        div {
+            font-weight: 200;
+            font-size: 40vh;
+            line-height: 1.2;
+            text-align: center;
+            &:hover {
+                cursor: move;
+            }
+        }
+    }
+    #speed {
+        bottom: -97vh;
+        left: 30vw;
+        width: 40vw;
+        div,
+        span {
+            display: inline-block;
+        }
+        div {
+            float: right;
+        }
+        span {
+            float: left;
+        }
+    }
+    #water-oil {
+        bottom: -90vh;
+        left: 2vw;
+        width: 18vw;
+        #water {
+            margin-bottom: 5vh;
+        }
+    }
+    #last-lap {
+        bottom: -80vh;
+        left: 62vw;
+        width: 36vw;
+        div {
+            color: @green;
+        }
+    }
+}

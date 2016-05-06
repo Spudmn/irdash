@@ -1,0 +1,50 @@
+<div id="formula_renault_20" class="container" >
+    <div id="pit" ird-rev-pit>
+        PIT LIMITER
+    </div>
+
+    <div id="revbar" ird-boards-renault-revbar>
+        <div class="marker" ng-repeat="rev in times(3)">
+            <div class="rev blue"></div>
+        </div>
+        <div class="marker" ng-repeat="rev in times(21)">
+            <div class="rev green"></div>
+        </div>
+        <div class="marker" ng-repeat="rev in times(4)">
+            <div class="rev yellow"></div>
+        </div>
+        <div class="marker" ng-repeat="rev in times(2)">
+            <div class="rev red"></div>
+        </div>
+    </div>
+
+    <fieldset id="rpm">
+        <div>{{ ir.RPM | fixed }}</div>
+        <span>RPM</span>
+    </fieldset>
+
+    <fieldset id="gear">
+        <div>{{ ir.Gear | gear }}</div>
+    </fieldset>
+
+    <fieldset id="speed">
+        <span>Speed</span>
+        <div>{{ ir.Speed | speed }}</div>
+    </fieldset>
+
+    <fieldset id="water-oil">
+        <div id="water">
+            <div>{{ ir.WaterTemp | fixed }}</div>
+            <span>WaterT&deg;</span>
+        </div>
+        <div id="oil">
+            <div>{{ ir.OilPress | fixed:2 }}</div>
+            <span>OilP</span>
+        </div>
+    </fieldset>
+
+    <fieldset id="last-lap">
+        <div>{{ ir.LapLastLapTime | lapTime }}</div>
+        <span>Last Lap</span>
+    </fieldset>
+</div>

@@ -13,7 +13,13 @@ const path = require('path')
 
 const paths = {
     styles: path.join(__dirname, 'styles', '**', '*.less'),
-    scripts: path.join(__dirname, 'scripts', '**', '*.js')
+    scripts: path.join(__dirname, 'scripts', '**', '*.js'),
+    vendors: [
+        path.join(__dirname, 'app', 'node_modules', 'lodash', 'lodash.js'),
+        path.join(__dirname, 'node_modules', 'angular', 'angular.js'),
+        path.join(__dirname, 'node_modules', 'angular-route', 'angular-route.js'),
+        path.join(__dirname, 'node_modules', 'angular-websocket', 'angular-websocket.js'),
+    ]
 }
 
 const dests = {
@@ -36,21 +42,22 @@ gulp.task('clean', function() {
 gulp.task('styles', function() {
     return gulp.src(paths.styles)
         .pipe(plumber({
-            handleError: function(err) {
+            errorHandler: function(err) {
                 console.log(err)
                 this.emit('end')
             }
         }))
         .pipe(less())
         .pipe(cleanCss())
-        .pipe(concat('dashboard.css'))
+        .pipe(concat('irdash.css'))
+        .pipe(plumber.stop())
         .pipe(gulp.dest(dests.styles))
 })
 
 gulp.task('scripts', function() {
     return gulp.src(paths.scripts)
         .pipe(plumber({
-            handleError: function(err) {
+            errorHandler: function(err) {
                 console.log(err)
                 this.emit('end')
             }
@@ -59,8 +66,23 @@ gulp.task('scripts', function() {
             presets: ['es2015', 'angular']
         }))
         .pipe(uglify())
-        .pipe(concat('dashboard.js'))
+        .pipe(concat('irdash.js'))
+        .pipe(plumber.stop())
         .pipe(gulp.dest(dests.scripts))
 })
 
-gulp.task('default', ['clean', 'styles', 'scripts'])
+gulp.task('vendors', function() {
+    return gulp.src(paths.vendors)
+        .pipe(plumber({
+            errorHandler: function(err) {
+                console.log(err)
+                this.emit('end')
+            }
+        }))
+        .pipe(uglify())
+        .pipe(concat('vendors.js'))
+        .pipe(plumber.stop())
+        .pipe(gulp.dest(dests.scripts))
+})
+
+gulp.task('default', ['clean', 'vendors', 'styles', 'scripts'])

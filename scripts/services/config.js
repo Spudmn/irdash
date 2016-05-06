@@ -1,19 +1,26 @@
-'use strict'
+class Config {
+    constructor() { // @todo inject electron
+        this.ipc = require('electron').ipcRenderer
+        this.load = true
+        this.data = {}
+    }
 
-const Config = function() {
-    this.ipc = require('electron').ipcRenderer
+    get() {
+        if (this.load) {
+            this.data = this.ipc.sendSync('getConfig')
+            this.load = false
+        }
+
+        return this.data
+    }
+
+    set(config) {
+        this.load = true
+
+        return this.ipc.sendSync('setConfig', config)
+    }
+
+    win() {
+        return this.ipc.sendSync('getWindow')
+    }
 }
-
-Config.prototype.get = function() {
-    return this.ipc.sendSync('getConfig')
-}
-
-Config.prototype.set = function(config) {
-    return this.ipc.sendSync('setConfig', config)
-}
-
-Config.prototype.win = function() {
-    return this.ipc.sendSync('getWindow')
-}
-
-window.Config = Config
