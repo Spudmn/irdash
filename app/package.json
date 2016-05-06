@@ -5,6 +5,7 @@
   "license": "MIT",
   "productName": "irdash",
   "description": "iRacing Dashboard",
+  "homepage": "https://github.com/pminnieur/irdash",
   "author": "Pierre Minnieur <pm@pierre-minnieur.de>",
   "copyright": "(c) 2016, Pierre Minnieur",
   "main": "irdash.js",

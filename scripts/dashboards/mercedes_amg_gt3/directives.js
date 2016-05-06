@@ -295,31 +295,15 @@
 
     app.directive('irdBoardsAmgGt3RevShift', ['Helpers', 'ShiftPoints', function(Helpers, ShiftPoints) {
         return {
-            restrict: 'AEC',
+            restrict: 'ACE',
             link: function($scope, $element, $attrs) {
-                let gear, carId
-
-                $scope.$watch('ir.DriverInfo', function(n, o) {
-                    if (!n || null == n || n < 1) {
+                $scope.$watchGroup(['ir.Gear', 'ir.RPM'], function(n, o) {
+                    let [gear, rpm] = n
+                    if (!gear || gear == null || !rpm || rpm == null) {
                         return
                     }
 
-                    carId = _.find(n.Drivers, function(o) {
-                        return o.CarIdx == n.DriverCarIdx
-                    }).CarID
-                })
-
-                $scope.$watch('ir.Gear', function(n, o) {
-                    gear = n
-                })
-
-                $scope.$watch('ir.RPM', function(n, o) {
-                    if (!n || n == null) {
-                        return
-                    }
-
-                    let shift = ShiftPoints.forCarAndGear(carId, gear) || $scope.blink,
-                        rpm   = n
+                    let shift = ShiftPoints.forCarAndGear($scope.carId, gear) || $scope.blink
 
                     if (rpm >= shift) {
                         if ($element.css('display') != 'block') {
@@ -337,7 +321,7 @@
 
     app.directive('irdBoardsAmgGt3RevbarAmgGt3', ['Helpers', function(Helpers) {
         return {
-            restrict: 'AEC',
+            restrict: 'ACE',
             link: function($scope, $element, $attrs) {
                 $scope.$watch('ir.RPM', function(n, o) {
                     if (!n || n == null) {
@@ -354,7 +338,7 @@
                     }
 
                     // in between
-                    if (rpm) {
+                    if (rpm > 0) {
                         $element.css('width', (rpm / max * 100) + '%')
                         return
                     }

@@ -1,35 +1,52 @@
 'use strict'
 
+const Config   = require('../config')
 const jsonfile = require('jsonfile')
 const path     = require('path')
+const fs       = require('fs')
 const _        = require('lodash')
 
-class Kutu {
-    constructor(app, ipc) {
-        this.defaults = jsonfile.readFileSync(path.join(__dirname, '..', '..', 'configs', 'kutu.json'))
-        this.path     = path.join(app.getPath('userData'), 'kutu.json')
+class Kutu extends Config {
+    constructor(dir) {
+        super(dir)
 
-        ipc.on('getKutu', (event) => {
-            event.returnValue = this.load()
-        })
+        this.path = path.join(this.dir, 'kutu.json')
+    }
 
-        ipc.on('setKutu', (event, config) => {
-            event.returnValue = this.save(config).load()
-        })
+    get host() {
+        return this.all().host
+    }
+
+    get fps() {
+        return this.all().fps
+    }
+
+    get ibt() {
+        return this.all().ibt
+    }
+
+    defaults() {
+        return jsonfile.readFileSync(path.join(__dirname, '..', '..', 'configs', 'kutu.json'))
     }
 
     load() {
         try {
-            return _.extend(this.defaults, jsonfile.readFileSync(this.path))
-        } catch(err) {
-            return this.defaults
+            return jsonfile.readFileSync(this.path)
+        } catch (err) {
+            return {}
         }
     }
 
     save(config) {
         jsonfile.writeFileSync(this.path, config)
 
-        return this
+        return true
+    }
+
+    watch() {
+        fs.watchFile(this.path, (curr, prev) => {
+            this.emit('change')
+        })
     }
 }
 

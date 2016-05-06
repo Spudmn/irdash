@@ -1,27 +1,87 @@
 'use strict'
 
 const electron = require('electron')
-const jsonfile = require('jsonfile')
-const path = require('path')
-const _ = require('lodash')
-
-jsonfile.spaces = 2
-
 const app = electron.app
-const ipc = electron.ipcMain
-const psb = require('electron').powerSaveBlocker;
-const psbId = psb.start('prevent-display-sleep')
 
-const Migrations = require('./modules/migrations')
-Migrations.run(app)
+const squirrel = require('./modules/squirrel')
+if (squirrel.handleSquirrelEvent(app)) {
+    return
+}
+
+const jsonfile = require('jsonfile')
+jsonfile.spaces = 4
+
+require('./modules/migrations').run(app)
 
 const Configs = require('./modules/configs')
-const configs = new Configs(app, ipc)
+const configs = new Configs(app.getPath('userData'))
 
-let debug = configs.window.debug,
-    mainWindow
+/*
+configs.shiftPoints.on('change', function() {})
+configs.kutu.on('change', function() {})
+configs.window.on('change', function() {})
+configs.watch()
+*/
 
-const BrowserWindow = electron.BrowserWindow
+let mainWindow
+
+const shouldQuit = app.makeSingleInstance(function(commandLine, workingDirectory) {
+    if (mainWindow) {
+        if (mainWindow.isMinimized()) {
+            mainWindow.restore()
+        }
+
+        mainWindow.show()
+        mainWindow.focus()
+    }
+
+    return true
+})
+
+if (shouldQuit) {
+    app.quit()
+    return
+}
+
+const debug = configs.window.debug
+const ipc = electron.ipcMain
+
+ipc.on('getCars', (event) => {
+    event.returnValue = configs.cars.all()
+})
+
+ipc.on('getKutu', (event) => {
+    event.returnValue = configs.kutu.all()
+})
+ipc.on('setKutu', (event, config) => {
+    event.returnValue = configs.kutu.save(config)
+})
+
+ipc.on('getShiftPoints', (event) => {
+    event.returnValue = configs.shiftPoints.all()
+})
+ipc.on('setShiftPoints', (event, config) => {
+    event.returnValue = configs.shiftPoints.save(config)
+})
+
+ipc.on('getConfig', (event) => {
+    event.returnValue = configs.window.all()
+})
+ipc.on('setConfig', function(event, config) {
+    event.returnValue = configs.window.save(config)
+
+    mainWindow.setMovable(!config.fixed)
+
+    if (!debug) {
+        if (config.width && config.height) {
+            mainWindow.setSize(config.width, config.height)
+        }
+
+        if (config.posX && config.posY) {
+            mainWindow.setPosition(config.posX, config.posY)
+        }
+    }
+})
 
 ipc.on('getWindow', function(event) {
     let size = mainWindow.getSize(),
@@ -34,6 +94,12 @@ ipc.on('getWindow', function(event) {
         posY: pos[1]
     }
 })
+
+const psb = require('electron').powerSaveBlocker;
+const psbId = psb.start('prevent-display-sleep')
+
+const BrowserWindow = electron.BrowserWindow
+
 function createWindow() {
     // @todo work wirth electron.screen
 
@@ -66,7 +132,7 @@ function createWindow() {
         }
     });
 
-    mainWindow.loadURL('file://' + __dirname + '/irdash.html')
+    mainWindow.loadURL(`file://${__dirname}/irdash.html`)
 
     if (debug) {
         mainWindow.webContents.openDevTools()

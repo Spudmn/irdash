@@ -4,7 +4,8 @@ iRacing Dashboard is a simple yet powerful dashboard for iRacing. It replaces th
 
 ## Installation
 
-Download the [latest release](https://github.com/pminnieur/irdash/releases) of a 32bit or 64bit version, unzip it to your preferred destination and run `irdash.exe`.
+Download the [latest release](https://github.com/pminnieur/irdash/releases) of a 32bit or 64bit version. There is an installer version
+or a zipped file. If you use the installer, the application will be installed in `%LocalAppData%\irdash`. If you use the zip file, unpack it where you want and run the `irdash.exe`.
 
 You also need to run the iRacing Browser Apps server which can be downloaded from [kutu](http://ir-apps.kutu.ru/). Its simple as that.
 

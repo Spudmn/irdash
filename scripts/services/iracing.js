@@ -12,8 +12,8 @@ class iRacing extends EventEmitter {
 
         this.reconnect = null
         this.firstTime = true
-        this.connected = false
-        this.running   = false
+        this.connected = false // whether WebSocket is connected
+        this.running   = false // whether iRacing is running
         this.data      = {}
         this.ws        = null
 
@@ -46,13 +46,13 @@ class iRacing extends EventEmitter {
             this.ws = null
         }
 
-        this.firstTime = true
-        this.connected = false
-
         if (this.running) {
             this.running = false
             this.emit('stop')
         }
+
+        this.connected = false
+        this.firstTime = true
 
         if (this.reconnect) {
             clearTimeout(this.reconnect)
@@ -67,7 +67,7 @@ class iRacing extends EventEmitter {
     open() {
         this.emit('open')
 
-        if (this.reconnected) {
+        if (this.reconnect) {
             clearTimeout(this.reconnect)
             this.reconnect = null
         }
@@ -90,6 +90,10 @@ class iRacing extends EventEmitter {
         if (this.running) {
             this.running = false
             this.emit('stop')
+        }
+
+        if (this.connected) {
+            this.connected = false
         }
 
         this.reconnect = setTimeout(() => {
@@ -115,7 +119,7 @@ class iRacing extends EventEmitter {
             })
         }
 
-        if (data.connected || (this.firstTime && !this.connected)) {
+        if (data.connected || (this.firstTime && !this.running)) {
             this.firstTime = false
             this.running = true
             this.emit('start')

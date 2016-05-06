@@ -32,7 +32,7 @@
         }, true)
 
         $scope.save = function(shifts) {
-            $scope.shifts = ShiftPoints.set(shifts)
+            ShiftPoints.set(shifts)
         }
     }])
 }

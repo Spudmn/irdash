@@ -12,7 +12,7 @@
     }])
 
     app.controller('BaseCtrl', ['$scope', 'iRacing', 'Helpers', function ($scope, iRacing, Helpers) {
-        $scope.opened = false
+        $scope.opened  = false
         $scope.started = false
 
         iRacing.on('open', () => {
@@ -27,6 +27,9 @@
         iRacing.on('stop', () => {
             $scope.started = false
         })
+        iRacing.on('update', () => {
+            $scope.$apply()
+        })
 
         $scope.ir = iRacing.data
 
@@ -39,6 +42,7 @@
         $scope.last    = 0
         $scope.idle    = 0
         $scope.drivers = 0
+        $scope.carId   = null
 
         $scope.$watch('ir.DriverInfo', function(n, o) {
             if (!n || null == n) {
@@ -54,6 +58,10 @@
             $scope.idle    = n.DriverCarIdleRPM
             $scope.red     = n.DriverCarRedLine
             $scope.drivers = n.Drivers.length
+
+            $scope.carId   = _.find(n.Drivers, function(o) {
+                return o.CarIdx == n.DriverCarIdx
+            }).CarID
         })
     }])
 }

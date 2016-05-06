@@ -13,7 +13,7 @@
 
     app.directive('irdRevPit', ['Helpers', 'EngineWarnings', function(Helpers, EngineWarnings) {
         return {
-            restrict: 'AEC',
+            restrict: 'ACE',
             link: function($scope, $element, $attrs) {
                 $scope.$watch('ir.EngineWarnings', function(n, o) {
                     if (n & EngineWarnings.PIT_SPEED_LIMITER) {

@@ -3,37 +3,23 @@
 
     app.directive('irdBoardsRenaultRevbar', ['$document', 'Helpers', 'ShiftPoints', function($document, Helpers, ShiftPoints) {
         return {
-            restrict: 'AEC',
+            restrict: 'ACE',
             link: function($scope, $element, $attrs) {
-                let revs, share, carId, gear
+                let revs, share
 
                 $scope.$watch('$last', function() {
                     revs  = $element.children().children()
                     share = 100 / revs.length
                 })
 
-                $scope.$watch('ir.DriverInfo', function(n, o) {
-                    if (!n || null == n || n < 1) {
+                $scope.$watchGroup(['ir.Gear', 'ir.RPM'], function(n, o) {
+                    let [gear, rpm] = n
+                    if (!gear || gear == null || !rpm || rpm == null || !$scope.blink || !$scope.idle) {
                         return
                     }
 
-                    carId = _.find(n.Drivers, function(o) {
-                        return o.CarIdx == n.DriverCarIdx
-                    }).CarID
-                })
-
-                $scope.$watch('ir.Gear', function(n, o) {
-                    gear = n
-                })
-
-                $scope.$watch('ir.RPM', function(n, o) {
-                    if (!n || n == null || !$scope.blink || !$scope.idle) {
-                        return
-                    }
-
-                    let shift = ShiftPoints.forCarAndGear(carId, gear) || $scope.blink,
-                        idle  = $scope.idle,
-                        rpm   = n
+                    let shift = ShiftPoints.forCarAndGear($scope.carId, gear) || $scope.blink,
+                        idle  = $scope.idle
 
                     if (rpm >= shift) {
                         if (!$element.hasClass('shift')) {

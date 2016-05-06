@@ -32,5 +32,5 @@ $ gulp watch # build on file change
 ### Electron
 
 ``` bash
-$ npm run packager
+$ npm run build
 ```

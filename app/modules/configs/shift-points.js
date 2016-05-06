@@ -1,35 +1,40 @@
 'use strict'
 
+const Config   = require('../config')
 const jsonfile = require('jsonfile')
 const path     = require('path')
+const fs       = require('fs')
 const _        = require('lodash')
 
-class ShiftPoints {
-    constructor(app, ipc) {
-        this.path     = path.join(app.getPath('userData'), 'shift_points.json')
-        this.defaults = {}
+class ShiftPoints extends Config {
+    constructor(dir) {
+        super(dir)
 
-        ipc.on('getShiftPoints', (event) => {
-            event.returnValue = this.load()
-        })
-
-        ipc.on('setShiftPoints', (event, config) => {
-            event.returnValue = this.save(config).load()
-        })
+        this.path = path.join(this.dir, 'shift_points.json')
     }
 
     load() {
         try {
-            return _.extend(this.defaults, jsonfile.readFileSync(this.path))
+            return jsonfile.readFileSync(this.path)
         } catch(err) {
-            return this.defaults
+            return {}
         }
     }
 
     save(config) {
-        jsonfile.writeFileSync(this.path, config)
+        try {
+            jsonfile.writeFileSync(this.path, config)
+        } catch (err) {
+            return false
+        }
 
-        return this
+        return true
+    }
+
+    watch() {
+        fs.watchFile(this.path, (curr, prev) => {
+            this.emit('change')
+        })
     }
 }
 

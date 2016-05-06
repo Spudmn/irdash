@@ -1,16 +1,19 @@
 'use strict'
 
+const Config   = require('../config')
 const jsonfile = require('jsonfile')
 const path     = require('path')
 const _        = require('lodash')
 
-class Cars {
-    constructor(app, ipc) {
-        this.cars = jsonfile.readFileSync(path.join(__dirname, '..', '..', 'configs', 'cars.json'))
+class Cars extends Config {
+    constructor(dir) {
+        super(dir)
 
-        ipc.on('getCars', (event) => {
-            event.returnValue = this.cars
-        })
+        this.path = path.join(__dirname, '..', '..', 'configs', 'cars.json')
+    }
+
+    defaults() {
+        return jsonfile.readFileSync(this.path)
     }
 }
 

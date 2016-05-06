@@ -7,7 +7,7 @@
         $scope.window = Config.win()
 
         $scope.save = function(config) {
-            $scope.config = Config.set(config)
+            Config.set(config)
         }
     }])
 }

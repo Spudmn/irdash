@@ -31,7 +31,6 @@ input[type=submit] {
         background-color: @cyan;
     }
 }
-
 input[type=email],
 input[type=number],
 input[type=password],
@@ -48,56 +47,34 @@ textarea {
         border-color: @cyan;
     }
 }
-#dashboards,
-#config,
-#iracing,
-#shift-points,
-#shift-lights,
-#window {
-    .close {
-        font-weight: bold;
-        position: absolute;
-        top: 0;
-        right: 2vw;
-        cursor: pointer;
-        width: 7.5vmin;
-        height: 7.5vmin;
-        text-align: center;
-        line-height: 7.5vmin;
-    }
-    nav {
-        border-right: 2px solid @base03;
-        ul {
+.close {
+    // @todo make it work
+    display: none;
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    right: 2vw;
+    cursor: pointer;
+    width: 7.5vmin;
+    height: 7.5vmin;
+    text-align: center;
+    line-height: 7.5vmin;
+}
+#navbar {
+    border-right: 2px solid @base03;
+    ul {
+        margin: 0;
+        padding: 0;
+        li {
+            border-bottom: 1px solid @base03;
+            list-style-type: none;
             margin: 0;
             padding: 0;
-            li {
-                border-bottom: 1px solid @base03;
-                list-style-type: none;
-                margin: 0;
-                padding: 0;
-                a {
-                    font-size: 4vh;
-                    line-height: 2.5;
-                    padding: 0 2vw;
-                }
+            a {
+                font-size: 4vh;
+                line-height: 2.5;
+                padding: 0 2vw;
             }
         }
     }
-}
-#dashboards {
-    #main {
-        ul {
-            li {
-                border-bottom: 1px solid @base03;
-                list-style-type: none;
-                a {
-                    font-size: 5vh;
-                    font-weight: bold;
-                }
-            }
-        }
-    }
-}
-#shift-points {
-    #main {}
 }
