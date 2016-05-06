@@ -12,6 +12,22 @@
     }])
 
     app.controller('BaseCtrl', ['$scope', 'iRacing', 'Helpers', function ($scope, iRacing, Helpers) {
+        $scope.opened = false
+        $scope.started = false
+
+        iRacing.on('open', () => {
+            $scope.opened = true
+        })
+        iRacing.on('close', () => {
+            $scope.opened = false
+        })
+        iRacing.on('start', () => {
+            $scope.started = true
+        })
+        iRacing.on('stop', () => {
+            $scope.started = false
+        })
+
         $scope.ir = iRacing.data
 
         $scope.revs    = []

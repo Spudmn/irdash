@@ -37,6 +37,23 @@
                             </button>
                         </div>
                     </div>
+                    <hr>
+                    <div class="row">
+                        <div class="column column-25">
+                            <label>Connection:</label>
+                        </div>
+                        <div class="column column-50">
+                            {{ opened ? 'connected' : 'waiting' }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column column-25">
+                            <label>iRacing:</label>
+                        </div>
+                        <div class="column column-50">
+                            {{ started ? 'running' : 'waiting' }}
+                        </div>
+                    </div>
                 </fieldset>
             </form>
         </div>
