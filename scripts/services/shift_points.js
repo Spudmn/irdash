@@ -1,36 +1,57 @@
-class ShiftPoints {
-    constructor() {
-        this.ipc  = require('electron').ipcRenderer
-        this.load = true
-        this.data = {}
+const ShiftPoints = (() => {
+    const ipc = require('electron').ipcRenderer
 
-        this.get()
+    let loaded = false
+
+    const load = function() {
+        loaded = true
+        
+        return ipc.sendSync('getShiftPoints')
     }
 
-    get() {
-        if (this.load) {
-            this.data = this.ipc.sendSync('getShiftPoints')
-            this.load = false
+    const save = function(config) {
+        loaded = false
+
+        return ipc.sendSync('setShiftPoints', config)
+    }
+
+    class ShiftPoints {
+        constructor() {
+            this.data = load()
         }
 
-        return this.data
-    }
+        all() {
+            if (!loaded) {
+                this.data = load()
+            }
 
-    set(shiftPoints) {
-        this.load = true
-
-        return this.ipc.sendSync('setShiftPoints', shiftPoints)
-    }
-
-    forCarAndGear(carId, gear) {
-        if (!this.data.hasOwnProperty(carId)) {
-            return null
+            return this.data
         }
 
-        if (!this.data[carId].hasOwnProperty(gear)) {
-            return null
+        save(config) {
+            return save(config)
         }
 
-        return this.data[carId][gear]
+        forCar(carId) {
+            if (!this.data.hasOwnProperty(carId)) {
+                return null
+            }
+
+            return this.data[carId]
+        }
+
+        forCarAndGear(carId, gear) {
+            if (!this.data.hasOwnProperty(carId)) {
+                return null
+            }
+
+            if (!this.data[carId].hasOwnProperty(gear)) {
+                return null
+            }
+
+            return this.data[carId][gear]
+        }
     }
-}
+
+    return ShiftPoints
+})()

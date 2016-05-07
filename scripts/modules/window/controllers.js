@@ -3,11 +3,11 @@
     ])
 
     app.controller('WindowCtrl', ['$scope', 'Config', function($scope, Config) {
-        $scope.config = Config.get()
-        $scope.window = Config.win()
+        $scope.config = Config.all()
+        $scope.window = Config.window()
 
         $scope.save = function(config) {
-            Config.set(config)
+            Config.save(config)
         }
     }])
 }

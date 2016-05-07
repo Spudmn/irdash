@@ -3,36 +3,38 @@
     ])
 
     app.controller('ShiftPointsCtrl', ['$scope', 'Cars', 'ShiftPoints', function($scope, Cars, ShiftPoints) {
-        $scope.cars   = Cars.get()
-        $scope.shifts = ShiftPoints.get()
+        $scope.allShiftPoints = ShiftPoints.all()
+        $scope.availableCars  = Cars.all()
+        $scope.selectedCarId  = null
+        $scope.carShiftPoints = {}
 
-        $scope.carId = null
-        $scope.gears = {}
-
-        $scope.$watch('carId', function(n, o) {
+        $scope.$watch('selectedCarId', function(n, o) {
             if (!n) {
                 return
             }
 
-            if (!$scope.shifts.hasOwnProperty(n)) {
-                $scope.gears = {}
+            if (!$scope.allShiftPoints.hasOwnProperty(n)) {
+                $scope.carShiftPoints = {}
                 return
             }
 
-            $scope.gears = $scope.shifts[n]
+            $scope.carShiftPoints = $scope.allShiftPoints[n]
         })
 
-        $scope.$watch('gears', function(n, o) {
+        $scope.$watch('carShiftPoints', function(n, o) {
             if (!n || !_.keys(n).length || !_.sum(_.values(n))) {
-                delete $scope.shifts[$scope.carId]
+                delete $scope.allShiftPoints[$scope.selectedCarId]
+
                 return
             }
 
-            $scope.shifts[$scope.carId] = n;
+            $scope.allShiftPoints[$scope.selectedCarId] = n;
         }, true)
 
-        $scope.save = function(shifts) {
-            ShiftPoints.set(shifts)
+        $scope.save = function(config) {
+            if (ShiftPoints.save(config)) {
+                $scope.allShiftPoints = ShiftPoints.all()
+            }
         }
     }])
 }

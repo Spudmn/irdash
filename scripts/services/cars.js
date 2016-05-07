@@ -1,18 +1,27 @@
-class Cars {
-    constructor() {
-        this.ipc = require('electron').ipcRenderer
-        this.load = true
-        this.data = {}
+const Cars = (() => {
+    const ipc = require('electron').ipcRenderer
 
-        this.get()
+    let loaded = false
+
+    const load = function() {
+        loaded = true
+
+        return ipc.sendSync('getCars')
     }
 
-    get() {
-        if (this.load) {
-            this.data = this.ipc.sendSync('getCars')
-            this.load = false
+    class Cars {
+        constructor() {
+            this.data = load()
         }
 
-        return this.data
+        all() {
+            if (!loaded) {
+                this.data = load()
+            }
+
+            return this.data
+        }
     }
-}
+
+    return Cars
+})()

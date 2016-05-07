@@ -1,35 +1,50 @@
-class Kutu {
-    constructor() {
-        this.ipc  = require('electron').ipcRenderer
-        this.load = true
-        this.data = {}
+const Kutu = (() => {
+    const ipc = require('electron').ipcRenderer
+
+    let loaded = false
+
+    const load = function() {
+        loaded = true
+        
+        return ipc.sendSync('getKutu')
     }
 
-    get() {
-        if (this.load) {
-            this.data = this.ipc.sendSync('getKutu')
-            this.load = false
+    const save = function(config) {
+        loaded = false
+
+        return ipc.sendSync('setKutu', config)
+    }
+
+    class Kutu {
+        constructor() {
+            this.data = load()
         }
 
-        return this.data
+        all() {
+            if (!loaded) {
+                this.data = load()
+                loaded = true
+            }
+
+            return this.data
+        }
+
+        get host() {
+            return this.data.host
+        }
+
+        get fps() {
+            return this.data.fps
+        }
+
+        get ibt() {
+            return this.data.ibt
+        }
+
+        save(config) {
+            return save(config)
+        }
     }
 
-    get host() {
-        return this.get().host
-    }
-
-    get fps() {
-        return this.get().fps
-    }
-
-    get ibt() {
-        return this.get().ibt
-    }
-
-    set(kutu) {
-        this.load = true
-
-        return this.ipc.sendSync('setKutu', kutu)
-    }
-
-}
+    return Kutu
+})()

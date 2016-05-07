@@ -3,6 +3,9 @@
         // angular
         'ngRoute',
 
+        // debug
+        'ir.debug',
+
         // global
         'ir.constants',
         'ir.controllers',
