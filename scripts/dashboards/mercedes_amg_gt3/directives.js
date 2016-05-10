@@ -293,7 +293,7 @@
         }
     })
 
-    app.directive('irdBoardsAmgGt3RevShift', ['Helpers', 'ShiftPoints', function(Helpers, ShiftPoints) {
+    app.directive('irdBoardsAmgGt3RevShift', ['Helpers', function(Helpers) {
         return {
             restrict: 'ACE',
             link: function($scope, $element, $attrs) {
@@ -303,7 +303,8 @@
                         return
                     }
 
-                    let shift = ShiftPoints.forCarAndGear($scope.carId, gear) || $scope.blink
+                    let sp = $scope.shiftPoints[$scope.carId] || {}
+                    let shift = sp[gear] || $scope.blink
 
                     if (rpm >= shift) {
                         if ($element.css('display') != 'block') {

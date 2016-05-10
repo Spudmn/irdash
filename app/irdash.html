@@ -6,16 +6,18 @@
 
         <title>irdash</title>
 
+        <base href="/">
+
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" type="text/css" href="styles/irdash.css">
+        <link rel="stylesheet" type="text/css" href="/styles/irdash.css">
     </head>
     <body ng-controller="MainCtrl as main" ng-keyup="key($event)">
         <div id="dashboard" ng-controller="BaseCtrl as base">
             <div ng-view></div>
         </div>
-        <script type="text/javascript" src="scripts/vendors.js"></script>
-        <script type="text/javascript" src="scripts/irdash.js"></script>
+        <script type="text/javascript" src="/scripts/vendors.js"></script>
+        <script type="text/javascript" src="/scripts/irdash.js"></script>
     </body>
 </html>

@@ -27,6 +27,10 @@
         'ir.dashboards.formula_renault_20'
     ])
 
+    app.config(['$locationProvider', function($locationProvider) {
+        $locationProvider.html5Mode(true)
+    }])
+
     app.config(['$routeProvider', function($routeProvider) {
         $routeProvider
             .when('/config', {

@@ -11,7 +11,7 @@
         }
     }])
 
-    app.controller('BaseCtrl', ['$scope', 'iRacing', 'Helpers', function ($scope, iRacing, Helpers) {
+    app.controller('BaseCtrl', ['$scope', 'iRacing', 'ShiftPoints', 'Helpers', function ($scope, iRacing, ShiftPoints, Helpers) {
         $scope.ir = iRacing.data
 
         $scope.revs    = []
@@ -24,6 +24,13 @@
         $scope.idle    = 0
         $scope.drivers = 0
         $scope.carId   = null
+
+        $scope.shiftPoints = {}
+        ShiftPoints.all().then((shiftPoints) => {
+            $scope.shiftPoints = shiftPoints
+        }).catch((err) => {
+            console.error(err)
+        })
 
         $scope.$watch('ir.DriverInfo', function(n, o) {
             if (!n || null == n) {

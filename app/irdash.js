@@ -8,6 +8,13 @@ if (squirrel.handleSquirrelEvent(app)) {
     return
 }
 
+require('crash-reporter').start({
+    productName: 'iRacing Dashboard',
+    companyName: 'Pierre Minnieur',
+    submitURL: 'https://irdash.ferm.io/crash-report',
+    autoSubmit: true
+})
+
 const jsonfile = require('jsonfile')
 jsonfile.spaces = 4
 
@@ -15,13 +22,6 @@ require('./modules/migrations').run(app)
 
 const Configs = require('./modules/configs')
 const configs = new Configs(app.getPath('userData'))
-
-/*
-configs.shiftPoints.on('change', function() {})
-configs.kutu.on('change', function() {})
-configs.window.on('change', function() {})
-configs.watch()
-*/
 
 let mainWindow
 
@@ -44,56 +44,6 @@ if (shouldQuit) {
 }
 
 const debug = configs.window.debug
-const ipc = electron.ipcMain
-
-ipc.on('getCars', (event) => {
-    event.returnValue = configs.cars.all()
-})
-
-ipc.on('getKutu', (event) => {
-    event.returnValue = configs.kutu.all()
-})
-ipc.on('setKutu', (event, config) => {
-    event.returnValue = configs.kutu.save(config)
-})
-
-ipc.on('getShiftPoints', (event) => {
-    event.returnValue = configs.shiftPoints.all()
-})
-ipc.on('setShiftPoints', (event, config) => {
-    event.returnValue = configs.shiftPoints.save(config)
-})
-
-ipc.on('getConfig', (event) => {
-    event.returnValue = configs.window.all()
-})
-ipc.on('setConfig', function(event, config) {
-    event.returnValue = configs.window.save(config)
-
-    mainWindow.setMovable(!config.fixed)
-
-    if (!debug) {
-        if (config.width && config.height) {
-            mainWindow.setSize(config.width, config.height)
-        }
-
-        if (config.posX && config.posY) {
-            mainWindow.setPosition(config.posX, config.posY)
-        }
-    }
-})
-
-ipc.on('getWindow', function(event) {
-    let size = mainWindow.getSize(),
-        pos = mainWindow.getPosition()
-
-    event.returnValue = {
-        width: size[0],
-        height: size[1],
-        posX: pos[0],
-        posY: pos[1]
-    }
-})
 
 const psb = require('electron').powerSaveBlocker;
 const psbId = psb.start('prevent-display-sleep')
@@ -132,7 +82,7 @@ function createWindow() {
         }
     });
 
-    mainWindow.loadURL(`file://${__dirname}/irdash.html`)
+    mainWindow.loadURL(`http://localhost:3000/irdash.html`)
 
     if (debug) {
         mainWindow.webContents.openDevTools()
@@ -142,6 +92,62 @@ function createWindow() {
         mainWindow = null
     })
 }
+
+const iRacing = require('./modules/iracing')
+const WebServer = require('./modules/webserver')
+const WebSocket = require('./modules/websocket')
+
+const ir = new iRacing()
+ir.connect()
+
+const web = new WebServer(__dirname)
+
+web.app.get('/api/cars', (req, res, next) => {
+    res.json(configs.cars.all())
+})
+web.app.get('/api/config', (req, res, next) => {
+    res.json(configs.window.all())
+})
+web.app.post('/api/config', (req, res, next) => {
+    configs.window.save(req.body)
+    res.json(configs.window.all())
+})
+web.app.get('/api/kutu', (req, res, next) => {
+    res.json(configs.kutu.all())
+})
+web.app.post('/api/kutu', (req, res, next) => {
+    configs.kutu.save(req.body)
+    res.json(configs.kutu.all())
+})
+web.app.get('/api/shift-points', (req, res, next) => {
+    res.json(configs.shiftPoints.all())
+})
+web.app.post('/api/shift-points', (req, res, next) => {
+    configs.shiftPoints.save(req.body)
+    res.json(configs.shiftPoints.all())
+})
+
+web.listen(3000)
+
+const ws = new WebSocket(web.http)
+ws.start()
+
+ws.on('connect', (con) => {
+    console.log('ws/ir:connect')
+
+    // pipes kutu to electron window
+    const listener = function(json) {
+        console.log('ws/ir:message')
+        con.sendUTF(JSON.stringify(json))
+    }
+
+    ir.on('message', listener)
+
+    con.on('close', () => {
+        console.log('ws/ir:detached')
+        ir.removeListener('message', listener)
+    })
+})
 
 app.on('ready', createWindow)
 

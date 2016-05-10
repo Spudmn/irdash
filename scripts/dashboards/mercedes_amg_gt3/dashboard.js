@@ -3,9 +3,12 @@
         'ir.dashboards.mercedes_amg_gt3.controllers',
         'ir.dashboards.mercedes_amg_gt3.directives',
         'ir.dashboards.mercedes_amg_gt3.filters',
+        'ir.internal.dashboards'
     ])
 
-    // app.value('board', 'mercedes_amg_gt3')
+    app.config(['DashboardsProvider', function(DashboardsProvider) {
+        DashboardsProvider.add('mercedes_amg_gt3', 'Mercedes AMG GT3', 72)
+    }])
 
     app.config(['$routeProvider', function($routeProvider) {
         $routeProvider

@@ -16,7 +16,7 @@
                             <input id="configWindowWidth" name="width" type="number" ng-model="config.width">
                         </div>
                         <div class="column column-15">
-                            <span>{{ window.width }}</span>
+                            <span>{{ window.size[0] }}</span>
                         </div>
                     </div>
                     <div class="row">
@@ -27,7 +27,7 @@
                             <input id="configWindowHeight" name="height" name="height" type="number" ng-model="config.height">
                         </div>
                         <div class="column column-15">
-                            <span>{{ window.height }}</span>
+                            <span>{{ window.size[1] }}</span>
                         </div>
                     </div>
                     <div class="row">
@@ -38,7 +38,7 @@
                             <input id="configWindowPosX" name="posX" type="number" ng-model="config.posX">
                         </div>
                         <div class="column column-15">
-                            <span>{{ window.posX }}</span>
+                            <span>{{ window.position[0] }}</span>
                         </div>
                     </div>
                     <div class="row">
@@ -49,7 +49,7 @@
                             <input id="configWindowPosY" name="posY" type="number" ng-model="config.posY">
                         </div>
                         <div class="column column-15">
-                            <span>{{ window.posY }}</span>
+                            <span>{{ window.position[1] }}</span>
                         </div>
                     </div>
                     <div class="row">

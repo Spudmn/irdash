@@ -50,6 +50,7 @@ class Window extends Config {
     }
 
     save(config) {
+        console.log(config)
         try {
             jsonfile.writeFileSync(this.path, config)
         } catch (err) {

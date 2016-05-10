@@ -3,8 +3,20 @@
     ])
 
     app.controller('ShiftPointsCtrl', ['$scope', 'Cars', 'ShiftPoints', function($scope, Cars, ShiftPoints) {
-        $scope.allShiftPoints = ShiftPoints.all()
-        $scope.availableCars  = Cars.all()
+        $scope.allShiftPoints = {}
+        ShiftPoints.all().then((shiftPoints) => {
+            $scope.allShiftPoints = shiftPoints
+        }).catch((err) => {
+            console.error('err')
+        })
+
+        $scope.availableCars  = []
+        Cars.all().then((cars) => {
+            $scope.availableCars = cars
+        }).catch((err) => {
+            console.error(err)
+        })
+
         $scope.selectedCarId  = null
         $scope.carShiftPoints = {}
 
@@ -32,9 +44,11 @@
         }, true)
 
         $scope.save = function(config) {
-            if (ShiftPoints.save(config)) {
-                $scope.allShiftPoints = ShiftPoints.all()
-            }
+            ShiftPoints.save(config).then((shiftPoints) => {
+                $scope.allShiftPoints = shiftPoints
+            }).catch((err) => {
+                console.error(err)
+            })
         }
     }])
 }

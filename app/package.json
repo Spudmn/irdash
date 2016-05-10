@@ -11,7 +11,12 @@
   "main": "irdash.js",
   "packageNameTemplate": "{{name}}-v{{version}}-{{platform}}-{{arch}}",
   "dependencies": {
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4",
+    "johnny-five": "^0.9.49",
     "jsonfile": "^2.3.0",
-    "lodash": "^4.11.2"
+    "lodash": "^4.11.2",
+    "node-pixel": "^0.6.1",
+    "websocket": "^1.0.22"
   }
 }

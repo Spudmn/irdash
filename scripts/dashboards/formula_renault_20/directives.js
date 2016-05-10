@@ -18,9 +18,12 @@
                         return
                     }
 
-                    let shift = ShiftPoints.forCarAndGear($scope.carId, gear) || $scope.blink,
+                    let sp = $scope.shiftPoints[$scope.carId] || {}
+
+                    let shift = sp[gear] || $scope.blink,
                         idle  = $scope.idle
 
+                    console.log('hihihi', revs, share, gear, rpm, shift, idle)
                     if (rpm >= shift) {
                         if (!$element.hasClass('shift')) {
                             $element.addClass('shift')

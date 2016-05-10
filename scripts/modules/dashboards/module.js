@@ -1,6 +1,7 @@
 {
     const app = angular.module('ir.internal.dashboards', [
         'ir.internal.dashboards.controllers',
+        'ir.internal.dashboards.providers',
         'ir.internal.dashboards.services'
     ])
 
